@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "identity": {
+    "config_sha256": "3b928b7fa65ee90acf52fe1c968de855cddddf3c81b5a2661d9ffd134bd48e76",
+    "source_manifest_hash": "1d8388dd180a3b528d8a7fe66fdee6fb8886d5a28c760b9aec3e1ea86e439d0b"
+  },
+  "evidence": {
+    "models": 24
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "command": "python run_full_protocol.py --resume",
+  "exit_code": 0,
+  "pytest_passed": 53,
+  "pytest_failed": 0,
+  "pytest_errors": 0,
+  "pytest_skipped": 0,
+  "existing_formal_files_unchanged": 257,
+  "manifest_artifacts_verified": 254,
+  "identity": {
+    "config_sha256": "3b928b7fa65ee90acf52fe1c968de855cddddf3c81b5a2661d9ffd134bd48e76",
+    "source_manifest_hash": "1d8388dd180a3b528d8a7fe66fdee6fb8886d5a28c760b9aec3e1ea86e439d0b"
+  },
+  "config_and_research_parameters_unchanged": true,
+  "scenario_count": 4096,
+  "row_count": 12288,
+  "solver_failures": 0,
+  "surrogate_targets_passed": 24,
+  "surrogate_targets_total": 24,
+  "minimum_gating_R2": 0.9744912370728869,
+  "maximum_gating_NMAE": 0.037440196244827445,
+  "maximum_investment_probability_MAE": 0.016752159322101865,
+  "maximum_conditional_year_MAE": 0.5922802617686409,
+  "multiple_pure_incidence": {
+    "JOINT_VENTURE": 0.02080707071554323,
+    "STATE_OWNED": 0.0,
+    "TRANSFER": 0.019571924565431376
+  },
+  "mixed_incidence": {
+    "JOINT_VENTURE": 0.0,
+    "STATE_OWNED": 0.0,
+    "TRANSFER": 0.0
+  },
+  "max_errors": {
+    "max_static_accounting_error": 3.637978807091713e-12,
+    "max_backward_forward_value_error": 7.73070496506989e-12,
+    "max_probability_mass_error": 4.440892098500626e-16
+  },
+  "main_searches": 16,
+  "supplementary_searches": 45,
+  "found_false": 61,
+  "false_brackets": 33,
+  "multiple_root_searches": 0
+}

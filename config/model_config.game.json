@@ -1,0 +1,74 @@
+{
+  "scenario_label": "CCUS_TWO_AGENT_STOCHASTIC_GAME_2026",
+  "simulation": {
+    "horizon": 30,
+    "economic_discount_rate": 0.08,
+    "dt_years": 1.0
+  },
+  "carbon_price": {
+    "P0": 96.23,
+    "mu": 0.04,
+    "sigma": 0.15,
+    "process": "STANDARD_GBM",
+    "tree": "PHYSICAL_MEASURE_CRR_BINOMIAL"
+  },
+  "carbon_market": {
+    "value_model": "REDUCED_FORM",
+    "effective_abatement_fraction": 0.70
+  },
+  "co2_quantity": {
+    "Q_bar": 0.50,
+    "utilization_fraction": 0.20
+  },
+  "carbon_source": {
+    "capex_initial": 450.0,
+    "capex_decline_rate": 0.0,
+    "fixed_opex": 0.0,
+    "variable_opex_per_ton": 240.0,
+    "idle_cost": 0.0
+  },
+  "transport_market": {
+    "market_price_per_ton": 125.0,
+    "fixed_opex_if_active": 0.0,
+    "variable_opex_per_ton": 125.0
+  },
+  "utilization_storage": {
+    "capex_initial": 40.3566,
+    "capex_decline_rate": 0.0,
+    "fixed_opex": 0.0,
+    "utilization_revenue_per_ton": 780.0,
+    "utilization_cost_per_ton": 94.1654,
+    "storage_cost_per_ton": 43.71965,
+    "storage_subsidy_per_ton": 0.0,
+    "idle_cost": 0.0
+  },
+  "joint_venture": {
+    "theta_C": 0.50,
+    "theta_T": 0.20,
+    "theta_U": 0.30
+  },
+  "bargaining": {
+    "co2_seller_weight": 0.50,
+    "storage_provider_weight": 0.50
+  },
+  "scenario_domain": {
+    "transport_market_price": [75.0, 200.0],
+    "effective_abatement_fraction": [0.50, 1.00],
+    "storage_subsidy": [0.0, 120.0],
+    "capex_C_multiplier": [0.70, 1.30],
+    "capex_U_multiplier": [0.70, 1.30],
+    "carbon_scale": [0.50, 6.25]
+  },
+  "solver": {
+    "equilibrium_tolerance": 1e-10,
+    "tie_tolerance": 1e-10
+  },
+  "dataset": {
+    "sobol_n": 4096,
+    "sobol_seed": 20260921,
+    "split_seed": 42,
+    "train_n": 2868,
+    "validation_n": 614,
+    "test_n": 614
+  }
+}

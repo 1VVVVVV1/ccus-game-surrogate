@@ -1,0 +1,10 @@
+.pytest_tmp/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.joblib
+results/formal/exact_dataset/chunks/
+results/formal/surrogate/models/
+results/source_backed_formal/exact_dataset/chunks/
+results/source_backed_formal/surrogate/models/
+results/archive/

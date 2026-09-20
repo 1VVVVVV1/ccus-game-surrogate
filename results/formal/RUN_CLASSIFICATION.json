@@ -1,0 +1,8 @@
+{
+  "run_type": "METHOD_VALIDATION_RUN",
+  "method_solver_validated": true,
+  "exact_solver_validated": true,
+  "surrogate_validated": true,
+  "empirical_source_audit_complete": false,
+  "paper_final_calibration": false
+}
