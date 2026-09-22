@@ -16,7 +16,7 @@ def metrics(y, predicted):
 
 
 def passes(target, measured):
-    if target in VALUE_TARGETS:
+    if target in VALUE_TARGETS or target.startswith("commit_now_"):
         return measured["R2"] >= .98 and measured["NMAE"] <= .05
     if target in PROBABILITY_TARGETS:
         return measured["MAE"] <= .03

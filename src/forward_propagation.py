@@ -3,7 +3,8 @@
 from dataclasses import dataclass
 from math import fsum, isfinite, nan
 import numpy as np
-from .config import GAMMA
+from .config import GAMMA, SOURCE_BACKED
+from .investment_synchronization_diagnostics import SynchronizationAccumulator
 from .state import STATES, next_state
 
 
@@ -90,6 +91,7 @@ def forward_propagate(solution, p, mode, horizon=30):
     active_years = total_u = total_s = 0.0
     trade = TransactionAccumulator(mode)
     complexity_years, policy_rows = [], []
+    synchronization = SynchronizationAccumulator(horizon) if SOURCE_BACKED else None
     for t in range(horizon):
         year_complexity = []
         for j in range(t + 1):
@@ -99,9 +101,13 @@ def forward_propagate(solution, p, mode, horizon=30):
                     continue
                 key = (t, j, x_c, x_u)
                 equilibrium = solution.policy[key]
+                if synchronization is not None:
+                    synchronization.add_state(t, (x_c, x_u), state_probability)
                 year_complexity.append(EquilibriumStateMass(float(state_probability), equilibrium.equilibrium_type, equilibrium.pure_ne_count))
                 for action, action_probability in equilibrium.actions:
                     weight = state_probability * action_probability
+                    if synchronization is not None:
+                        synchronization.add_action(action, state_probability, action_probability)
                     outcome = solution.outcomes[key + action]
                     profits = np.asarray(outcome.profits)
                     if mode == "STATE_OWNED":
@@ -146,6 +152,8 @@ def forward_propagate(solution, p, mode, horizon=30):
         result[f"expected_tau_{agent}_conditional"] = float(np.arange(horizon) @ investment[:, i] / probability) if probability >= 1e-12 else nan
     result.update(trade.summary(horizon))
     result.update(equilibrium_complexity_summary(complexity_years, mode))
+    if synchronization is not None:
+        result.update(synchronization.summary())
     return result, {"annual_probability_mass": [float(mass[t].sum()) for t in range(horizon+1)],
                     "investment_time_probabilities": investment.tolist(),
                     "co2_trade_denominator": trade.co2_denominator,

@@ -1,0 +1,473 @@
+用户决定：取消 Li Fig.5 作为正式 EOR 产油量/收益校准依据。
+
+正式采用一个透明的固定换油率假设：
+
+4 tCO2 injected / 1 t incremental oil
+
+即：
+
+eor_co2_oil_ratio
+=
+4.0 tCO2 / t-oil
+
+status:
+MODEL_ASSUMPTION
+
+==================================================
+1. 正式产油量公式
+==================================================
+
+本模型中 EOR 路径的 CO2 注入量使用：
+
+q_u
+
+q_u 的单位：
+
+tCO2/year
+
+定义增量产油量：
+
+Q_oil
+=
+q_u / 4.0
+
+单位：
+
+t-oil/year
+
+即：
+
+每注入4吨CO2，
+产生1吨增量原油。
+
+不得再从 Li Fig.5 的 oil-production curve
+推导正式产油量。
+
+==================================================
+2. 正式EOR收益公式
+==================================================
+
+若油价定义为：
+
+P_oil
+=
+CNY / t-oil
+
+则：
+
+EOR revenue
+=
+Q_oil * P_oil
+
+=
+(q_u / 4.0) * P_oil
+
+因此可以直接写成：
+
+EOR revenue
+=
+q_u * (P_oil / 4.0)
+
+所以模型中的：
+
+utilization_revenue_per_ton
+
+正式定义为：
+
+utilization_revenue_per_ton
+=
+P_oil / 4.0
+
+单位：
+
+CNY / tCO2
+
+==================================================
+3. 与现有B_u公式衔接
+==================================================
+
+当前利用端议价中的：
+
+B_u
+=
+P_o - c_u
+
+其中正式令：
+
+P_o
+=
+P_oil / 4.0
+
+因此：
+
+P_o
+
+不再理解为：
+
+oil price itself
+
+而是：
+
+gross EOR revenue attributable to one tonne of fresh CO2
+routed to the EOR pathway.
+
+==================================================
+4. q_u就是正式收益分母/物理基数
+==================================================
+
+只使用：
+
+q_u
+
+计算增量油收益。
+
+不得把：
+
+recycled CO2
+
+再次加入收益侧注入量。
+
+即：
+
+Q_oil
+=
+q_u / 4
+
+而不是：
+
+(q_u + recycled_CO2) / 4
+
+原因：
+
+本模型q_u表示外部新CO2进入EOR商业路径的流量，
+内部回收CO2不形成新的外部CO2交易或新的q_u。
+
+==================================================
+5. xi的作用
+==================================================
+
+基准：
+
+Q_bar = 0.50 Mt/year
+xi = 0.20
+
+在双方均已建设且无交易约束时：
+
+q_u
+=
+0.20 × 0.50
+=
+0.10 MtCO2/year
+
+因此：
+
+incremental oil
+=
+0.10 / 4
+=
+0.025 Mt-oil/year
+
+即：
+
+25,000 t-oil/year
+
+这个只是由模型假设推导出的基准产油量，
+不是齐鲁—胜利项目实测产量。
+
+==================================================
+6. 参数身份
+==================================================
+
+登记：
+
+parameter_key:
+utilization_storage.eor_co2_oil_ratio
+
+formal_value:
+4.0
+
+unit:
+tCO2/t-oil
+
+status:
+MODEL_ASSUMPTION
+
+source_id:
+USER_MODEL_DESIGN
+
+paper_use:
+FORMAL_EOR_REVENUE_CONVERSION
+
+uncertainty_note:
+"A fixed ratio of 4 tCO2 injected per tonne of incremental
+oil is assumed for the formal EOR revenue mapping. It is a
+structural model assumption rather than an observed
+Qilu–Shengli project ratio."
+
+==================================================
+7. 油价单位必须统一
+==================================================
+
+正式计算中：
+
+P_oil
+
+必须最终统一成：
+
+CNY / t-oil
+
+如果来源油价是：
+
+USD / bbl
+
+则不能直接代入。
+
+必须先完成：
+
+USD/bbl
+→ CNY/t-oil
+
+的独立单位换算和来源审计。
+
+在桶吨换算和汇率没有确定之前：
+
+不要生成正式P_o数值。
+
+禁止把：
+
+USD/bbl / 4
+
+直接当成：
+
+CNY/tCO2。
+
+==================================================
+8. 如果油价已有CNY/t-oil来源
+==================================================
+
+则直接：
+
+P_o
+=
+P_oil_CNY_per_ton / 4
+
+例如：
+
+如果
+P_oil = X CNY/t-oil
+
+则：
+
+utilization_revenue_per_ton
+=
+X / 4 CNY/tCO2
+
+不再需要Fig.5油产量。
+
+==================================================
+9. Li Fig.5处理
+==================================================
+
+此前已经完成的：
+
+publisher high-res image
+oil marker digitization
+pixel uncertainty
+audit records
+
+全部保留用于审计历史。
+
+但：
+
+正式模型不再使用
+Li Fig.5 oil-production values
+
+来确定：
+
+P_o
+或
+incremental oil output。
+
+将其标记为：
+
+REFERENCE_ONLY_NOT_USED_IN_FORMAL_REVENUE_CALIBRATION
+
+不要删除已有文件。
+
+==================================================
+10. 当前被遮挡点STOP如何处理
+==================================================
+
+因为正式收益不再依赖：
+
+Fig.5 oil curve
+或
+Fig.5 annual oil-output path
+
+所以：
+
+oil-output/revenue部分的遮挡点问题解除。
+
+不要再为了收益端估读：
+
+year-11 recycled marker
+year-5 injection marker。
+
+==================================================
+11. 但是不要误删成本端
+==================================================
+
+注意：
+
+本决定只替代：
+
+EOR output/revenue mapping。
+
+它不自动改变此前批准的：
+
+two-part EOR OPEX structure。
+
+因此：
+
+fixed EOR OPEX
+和
+variable EOR OPEX
+
+仍按现有审计规则处理。
+
+如果variable OPEX仍然依赖：
+
+recycled CO2 quantity
+
+则这是：
+
+EOR OPEX calibration issue
+
+而不是 revenue issue。
+
+不得因为本次4:1假设
+静默把recycling cost设为0。
+
+==================================================
+12. 如果Fig.5仅剩成本用途
+==================================================
+
+重新检查：
+
+是否还有正式成本参数必须依赖Fig.5的
+R_total / injection total。
+
+如果有：
+
+保留该STOP作为：
+
+EOR_OPEX_DATA_GAP
+
+而不是：
+
+EOR_REVENUE_DATA_GAP。
+
+如果没有：
+
+则完全停止Fig.5数字化，
+将所有Fig.5数字化结果归为REFERENCE_ONLY。
+
+==================================================
+13. 不使用2.97 Mt做正式收益
+==================================================
+
+Li正文中的：
+
+2.97 Mt incremental oil
+
+保留为：
+
+LITERATURE_REFERENCE_ONLY
+
+不要用它校准：
+
+4 tCO2/t-oil
+
+也不要为了让：
+
+10.68 / 2.97
+
+接近某个比例而修改4.0。
+
+4.0是用户明确的模型假设。
+
+==================================================
+14. 测试
+==================================================
+
+新增至少：
+
+Test 1:
+q_u = 4 t
+→ oil = 1 t
+
+Test 2:
+q_u = 0
+→ oil = 0
+→ EOR revenue = 0
+
+Test 3:
+q_u = 100000 t
+→ oil = 25000 t
+
+Test 4:
+P_oil = 4000 CNY/t-oil
+→ P_o = 1000 CNY/tCO2
+
+Test 5:
+doubling q_u
+→ oil and revenue double
+
+Test 6:
+recycled CO2 does not change revenue
+when q_u is fixed
+
+Test 7:
+changing xi changes q_u through the existing flow model,
+but does not change the fixed 4.0 ratio
+
+Test 8:
+Fig.5 digitized oil data cannot overwrite
+the formal 4.0 conversion.
+
+==================================================
+15. 论文表述
+==================================================
+
+正式写法：
+
+"A fixed EOR conversion ratio of 4 tCO2 per tonne of
+incremental oil is imposed as a structural model assumption.
+Accordingly, incremental oil production is calculated as
+q_u/4, and gross EOR revenue equals (q_u/4) times the oil
+price."
+
+并明确：
+
+"This ratio is not claimed to be an observed operating
+performance of the Qilu–Shengli project."
+
+==================================================
+16. 当前结论
+==================================================
+
+正式收益映射：
+
+Oil output:
+Q_oil = q_u / 4
+
+Gross EOR revenue:
+R_EOR = (q_u / 4) * P_oil
+
+Equivalent per-ton-CO2 revenue:
+P_o = P_oil / 4
+
+Fig.5不再用于正式收益校准。
+
+继续剩余SOURCE_AUDIT；
+SOURCE_AUDIT_GATE通过以前仍不要启动12288行正式运行。

@@ -1,0 +1,579 @@
+用户决定：
+
+本次 source-backed 正式校准的 U 端路线固定为：
+
+CHINA_ONSHORE_CO2_EOR
+
+主技术经济来源固定为：
+
+Wei, N., Li, X., Dahowski, R.T., Davidson, C.L., Liu, S., Zha, Y.
+Economic evaluation on CO2-EOR of onshore oil fields in China.
+International Journal of Greenhouse Gas Control, 2015, 37, 170–181.
+DOI:
+10.1016/j.ijggc.2015.01.014
+
+具体源—汇工程锚点固定为：
+
+Qilu Petrochemical – Shengli Oilfield
+million-tonne CCUS-EOR project
+
+不要再询问“采用哪种U端利用路线”。
+
+==================================================
+1. U端路线定义
+==================================================
+
+U 端正式定义为：
+
+onshore CO2-EOR + associated geological storage
+
+主要工艺：
+
+Water-Alternating-Gas, WAG
+
+不要改成：
+
+chemical utilization
+food-grade CO2
+mineralization
+methanol
+synthetic fuel
+
+旧模型中将 utilization revenue 简单解释成：
+
+generic EOR value
+
+现在必须改成：
+
+CO2-EOR economic value
+
+==================================================
+2. Wei et al. 2015 可直接登记的文献参数
+==================================================
+
+重新核验原文 Table 1、Table 2、Table 4 后登记。
+
+Table 4：
+
+oil_price_reference
+=
+90 USD/bbl
+
+status:
+MODEL_ASSUMPTION
+
+note:
+Deterministic economic-evaluation assumption in Wei et al. (2015);
+not an observed current oil price.
+
+CO2_purchase_price_reference
+=
+50 USD/tCO2
+
+status:
+MODEL_ASSUMPTION
+
+note:
+Reference EOR CO2 purchase-price assumption in the source paper.
+It MUST NOT replace this project's endogenous Nash-bargained CO2 price.
+
+CO2_recycling_cost
+=
+23.66 USD/tCO2
+
+status:
+DERIVED_FROM_EMPIRICAL or EMPIRICAL
+only if the paper's underlying sourcing supports that classification;
+otherwise MODEL_ASSUMPTION with source.
+
+discount_rate_EOR_reference
+=
+12%
+
+status:
+MODEL_ASSUMPTION
+
+EOR_project_lifetime_reference
+=
+12 years
+
+status:
+MODEL_ASSUMPTION
+
+new_well_ratio
+=
+15%
+
+status:
+MODEL_ASSUMPTION
+
+CO2_injection
+=
+0.5 HCPV
+
+status:
+MODEL_ASSUMPTION
+
+CO2_water_ratio
+=
+1:1
+
+status:
+MODEL_ASSUMPTION
+
+这些参数必须记录文献来源，
+但不要因为它们出现在顶级/高水平期刊里，
+就把论文作者设置的 scenario assumption 错标为 EMPIRICAL。
+
+==================================================
+3. Wei et al. 2015 O&M 数据
+==================================================
+
+原文核验后允许登记：
+
+CO2 compression cost:
+
+13 USD/tCO2
+for approximately 1 bar CO2 feed
+
+1 USD/tCO2
+for high-pressure CO2 received from pipeline terminal
+
+CO2 recycling:
+
+23.66 USD/tCO2
+
+fluid pumping:
+
+1 USD/STB
+
+water compression:
+
+1 USD/m3
+
+monitoring & verification:
+
+0.1 USD/tCO2
+
+site characterization:
+
+30000 USD/km2
+
+同时保存原文公式。
+
+不要把这些项目简单全部相加成：
+
+utilization_cost_per_ton
+
+除非单位和成本边界完全一致。
+
+==================================================
+4. U端CAPEX处理
+==================================================
+
+旧：
+
+utilization_storage.capex_initial
+=
+40.3566 million CNY
+
+不再允许沿用。
+
+Wei et al. 2015 没有提供一个适用于所有中国油田的
+单一固定 CAPEX。
+
+它提供的是：
+
+site characterization
+well-pattern equipment
+production equipment
+injection equipment
+drilling & completion
+workover
+flowlines
+other CO2-related equipment
+
+组成的 EOR CAPEX cost model。
+
+因此：
+
+不要为了保持旧代码结构，
+硬从论文里挑一个数字替代 40.3566。
+
+优先方案：
+
+建立：
+
+src/eor_cost_calibration.py
+
+完整编码 Wei et al. 2015 Table 1 / Table 2
+中与中国地区相关的 CAPEX/O&M 方程和回归系数。
+
+必须逐公式增加单元测试。
+
+但是：
+
+只有能够从齐鲁—胜利项目或可靠文献获得
+对应的：
+
+well number
+injection well number
+production well number
+well depth
+pattern number
+site area
+
+等必要输入时，
+
+才允许根据该 cost model 计算
+Qilu-Shengli 对应的 EOR CAPEX。
+
+如果缺少必要输入：
+
+不要猜。
+
+继续搜索：
+
+Journal of Cleaner Production 2022:
+Investment in CO2 capture and storage combined with
+enhanced oil recovery in China:
+A case study of China's first megaton-scale project
+
+DOI:
+10.1016/j.jclepro.2022.133724
+
+以及：
+
+Environmental Impact Assessment Review 2025:
+Comprehensive evaluation of CCUS technology:
+A case study of China's first million-tonne CCUS-EOR project
+
+DOI:
+10.1016/j.eiar.2024.107684
+
+优先从这两个“同一个齐鲁—胜利项目”的文献中
+寻找 U-side investment / operating cost / oil-production inputs。
+
+不要再跨接神华、吉林、其他海外项目的固定CAPEX。
+
+==================================================
+5. 源—汇项目与运输距离
+==================================================
+
+本次正式 source-sink anchor 固定为：
+
+Qilu Petrochemical
+→
+Shengli Oilfield
+
+正式 pipeline distance：
+
+109 km
+
+优先 Grade A 来源：
+
+China Petrochemical Corporation / Sinopec
+official project information
+
+交叉验证：
+
+国家能源局
+以及高质量同行评审文献。
+
+登记：
+
+source_sink_distance
+=
+109 km
+
+status:
+EMPIRICAL
+
+不要继续使用旧：
+
+250 km
+
+作为 source-backed baseline。
+
+250 km 只允许保留为：
+
+DESIGN_RANGE_ASSUMPTION
+或旧 METHOD_VALIDATION_RUN 参数。
+
+==================================================
+6. 真实运输成本
+==================================================
+
+如果 0.2584 CNY/(tCO2·km)
+经 Journal of CO2 Utilization 原文核验成立：
+
+pipeline_cost_coefficient
+=
+0.2584 CNY/(tCO2 km)
+
+则 source-backed baseline：
+
+distance
+=
+109 km
+
+因此：
+
+transport_real_cost_per_ton
+=
+0.2584 × 109
+
+=
+28.1656 CNY/tCO2
+
+这个计算必须标记：
+
+DERIVED_FROM_EMPIRICAL
+
+transformation_formula:
+
+0.2584 CNY/(tCO2 km)
+×
+109 km
+=
+28.1656 CNY/tCO2
+
+不要四舍五入成 28 或 30 进入正式 config。
+
+transport market transfer price：
+
+125 CNY/tCO2
+
+继续保持：
+
+MODEL_ASSUMPTION
+
+两者必须严格分开。
+
+==================================================
+7. transport利润
+==================================================
+
+TRANSFER：
+
+C pays:
+
+P_tr_market × Q
+
+T receives:
+
+P_tr_market × Q
+
+T real cost:
+
+28.1656 × Q
+
+因此：
+
+pi_T
+=
+125 × Q
+-
+28.1656 × Q
+
+系统加总时：
+
+125 × Q
+
+内部转移支付抵消。
+
+系统真正消耗：
+
+28.1656 × Q
+
+不要再让：
+
+transport market price
+=
+transport real cost。
+
+==================================================
+8. utilization revenue处理
+==================================================
+
+旧：
+
+780 CNY/tCO2
+
+不再允许无证据沿用。
+
+不要直接把：
+
+oil price = 90 USD/bbl
+
+写成：
+
+utilization revenue = 某个 CNY/tCO2
+
+因为还缺：
+
+incremental oil production per unit CO2
+
+的转换关系。
+
+继续从：
+
+Wei et al. 2015
+
+以及：
+
+Li et al. 2022, Journal of Cleaner Production
+DOI 10.1016/j.jclepro.2022.133724
+
+和：
+
+Miao et al. 2025, Environmental Impact Assessment Review
+DOI 10.1016/j.eiar.2024.107684
+
+提取同口径：
+
+annual injected CO2
+annual/recovered oil
+incremental oil production
+recycled CO2
+project lifetime
+
+如果取得可靠 ratio：
+
+R_oil/CO2
+=
+incremental oil / CO2
+
+则 utilization revenue 必须写成：
+
+R_util
+=
+oil_price
+×
+R_oil/CO2
+
+并完整记录单位转换。
+
+不得继续把780作为默认答案。
+
+==================================================
+9. 不要把文献的50 USD/t替代Nash价格
+==================================================
+
+本项目正式 CO2 transaction price
+仍由 generalized Nash bargaining 内生确定。
+
+Wei et al. 的：
+
+50 USD/tCO2
+
+只作为：
+
+literature reference / validation benchmark
+
+不能直接固定：
+
+P_u = 50 USD/t
+
+否则会破坏当前双主体博弈结构。
+
+==================================================
+10. 论文寿命和折现率不要立即改
+==================================================
+
+Wei et al. 2015 的：
+
+12-year EOR lifetime
+12% discount rate
+
+属于其确定性经济评价设置。
+
+当前项目：
+
+30-year decision horizon
+
+与：
+
+统一 economic discount rate
+
+暂时不要自动改。
+
+请继续完成：
+
+horizon
+discount rate
+
+的独立 source audit。
+
+如果最终要在：
+
+8%
+vs
+12%
+
+之间做 source-backed 选择，
+
+必须 STOP_FOR_USER_DECISION。
+
+不要自行选择。
+
+==================================================
+11. Qilu-Shengli作为正式案例锚点
+==================================================
+
+source-backed 文稿必须明确：
+
+本研究不是声称完全复刻齐鲁—胜利项目。
+
+正确表述：
+
+"The Qilu Petrochemical–Shengli Oilfield project is used as
+the physical source–sink and CO2-EOR route anchor,
+while the stochastic game retains the study's own
+institutional structures for TRANSFER, JOINT_VENTURE,
+and STATE_OWNED."
+
+即：
+
+109 km
+百万吨级
+EOR路线
+
+来自真实项目。
+
+而：
+
+TRANSFER / JV / SOE
+
+是本研究设计的商业组织情景。
+
+不能声称真实齐鲁项目同时存在三种模式。
+
+==================================================
+12. 继续来源审核
+==================================================
+
+现在：
+
+source-sink project = 已确定
+U route = 已确定
+distance = 可按109 km审核闭环
+
+不要再就这三项 STOP。
+
+继续审核：
+
+U CAPEX
+EOR utilization revenue
+EOR utilization cost
+capture CAPEX/OPEX
+effective abatement
+official carbon prices
+discount rate
+horizon
+
+只有剩余字段无法可靠映射时，
+再 STOP_FOR_USER_DECISION。
+
+不要开始正式12288行计算，
+直到 GATE_SOURCE_AUDIT 全部通过。

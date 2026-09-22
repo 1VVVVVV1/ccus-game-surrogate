@@ -1,0 +1,549 @@
+用户决定：资产边界专项核查完成。
+
+最终分类：
+
+PIPELINE_EXCLUDED
+
+允许解除此前 U_CAPEX 资产边界 STOP。
+
+==================================================
+1. 核心结论
+==================================================
+
+胜利油田：
+
+高89-樊142地区二氧化碳驱油与封存示范工程
+
+正式总投资：
+
+10.63亿元
+=
+1063 million CNY
+
+在本研究的资产映射中：
+
+明确按“排除109 km跨区域CO2长输干线”处理。
+
+因此：
+
+reference_U_downstream_CAPEX
+=
+1063 million CNY
+
+无需从1063中再扣减109 km pipeline CAPEX。
+
+==================================================
+2. 证据链 1：发行人正式年度报告
+==================================================
+
+中国石油化工股份有限公司
+2025年度报告
+中国货币网官方披露。
+
+表4.3 / 4.4 明确列示：
+
+项目：
+
+胜利油田分公司高89-樊142地区
+二氧化碳驱油与封存示范工程
+
+项目进展：
+
+2021年10月开工建设
+2022年8月正式注气运行
+已完工
+
+总投资：
+
+10.63亿元
+
+同时报告：
+
+胜利油田CCUS项目
+年封存能力约70万吨CO2。
+
+因此正式登记：
+
+literature.qilu_shengli.eor_storage_project_capex
+=
+1063 million CNY
+
+status:
+EMPIRICAL
+
+literature.qilu_shengli.reference_capacity
+=
+0.70 MtCO2/year
+
+status:
+EMPIRICAL
+
+==================================================
+3. 证据链 2：两个工程具有不同正式批准文件
+==================================================
+
+高89-樊142地区二氧化碳驱油与封存示范工程：
+
+中国石化正式招标资料显示，
+依据：
+
+石化股份油〔2021〕146号
+
+批准建设。
+
+该工程2021年已经进入建设阶段。
+
+--------------------------------------------------
+
+109 km CO2长输干线：
+
+项目名称：
+
+齐鲁石化-胜利油田百万吨级CCUS示范项目
+二氧化碳输送管道工程
+
+中国石化正式招标公告显示，
+依据另一独立批准文件：
+
+石化股份计〔2022〕78号
+
+批准建设。
+
+项目业主：
+
+中国石油化工股份有限公司
+胜利油田分公司纯梁采油厂
+
+建设资金：
+
+企业自筹
+100%
+
+因此：
+
+高89-樊142 EOR/storage project
+
+与：
+
+Qilu-Shengli CO2 transmission pipeline project
+
+是两个具有不同：
+
+项目名称
+批准文件
+建设时序
+
+的正式建设项目。
+
+本研究据此将长输管道视为
+10.63亿元驱油封存工程之外的独立运输资产。
+
+==================================================
+4. 证据链 3：投运时间证明两者不是同一完工资产包
+==================================================
+
+中国石化官方时间线：
+
+2022年8月29日：
+
+齐鲁石化-胜利油田百万吨级CCUS项目
+正式注气运行。
+
+当时高89-樊142驱油封存工程
+已经能够正常接受CO2并开展EOR/storage。
+
+--------------------------------------------------
+
+109 km CO2长输管道：
+
+直到：
+
+2023年7月11日
+
+才正式投运。
+
+在此之前：
+
+2022年8月项目投产后主要依靠槽车
+从齐鲁石化向胜利油田运输CO2。
+
+因此：
+
+高89-樊142驱油封存工程
+能够在109 km长输管道投运之前独立运行。
+
+这进一步支持：
+
+109 km pipeline
+不属于10.63亿元高89-樊142驱油封存工程的
+既有完工资产边界。
+
+==================================================
+5. 正式资产分类
+==================================================
+
+模型正式定义：
+
+C-side CAPEX:
+捕集端资产
+
+T-side:
+109 km inter-site CO2 transport infrastructure
+and transport resource cost
+
+U-side CAPEX:
+高89-樊142 EOR/storage downstream platform
+
+因此：
+
+U CAPEX不得包含：
+
+- 109 km inter-site trunk pipeline
+- C端捕集设施
+- C端已经计入的压缩设备
+- T模块已经承担的运输资产/运输资源成本
+
+==================================================
+6. 允许执行此前已经授权的容量映射
+==================================================
+
+此前用户已经授权：
+
+linear capacity scaling
+
+reference:
+
+I_U_ref
+=
+1063 million CNY
+
+Q_ref
+=
+0.70 MtCO2/year
+
+模型：
+
+Q_model
+=
+0.50 MtCO2/year
+
+因此：
+
+I_U_formal
+=
+1063
+×
+(0.50 / 0.70)
+
+=
+759.2857142857143 million CNY
+
+现在资产边界前置条件已经满足。
+
+正式写入：
+
+utilization_storage.capex_initial
+=
+759.2857142857143
+
+==================================================
+7. 正式参数身份
+==================================================
+
+注意：
+
+1063 million CNY：
+
+EMPIRICAL
+
+0.70 Mt/year：
+
+EMPIRICAL
+
+但：
+
+759.2857142857143 million CNY
+
+不是纯经验观测值。
+
+正式状态：
+
+MODEL_ASSUMPTION
+
+更完整描述：
+
+EMPIRICAL_PROJECT_ANCHOR_WITH_EXPLICIT_LINEAR_CAPACITY_SCALING
+
+如果registry只允许既定枚举：
+
+status =
+MODEL_ASSUMPTION
+
+并在：
+
+transformation
+
+写：
+
+1063 × (0.50 / 0.70)
+
+uncertainty_note：
+
+"The reference investment and capacity are project-reported
+empirical values. Linear rescaling to the model's
+0.50 MtCO2/year integrated downstream platform is a
+transparent modeling assumption."
+
+==================================================
+8. 8.1亿元历史值如何处理
+==================================================
+
+中国石化2021年招标资料还出现：
+
+建设投资 = 8.1亿元
+
+对应：
+
+高89-樊142地区二氧化碳驱油与封存示范工程
+早期工程建设/批准阶段。
+
+不要用：
+
+8.1亿元
+
+替换：
+
+10.63亿元。
+
+原因：
+
+10.63亿元来自更晚的发行人正式年度报告，
+明确列为该已完工项目的“总投资”。
+
+因此：
+
+8.1亿元
+
+登记为：
+
+EARLY_PROJECT_INVESTMENT_ESTIMATE_REFERENCE_ONLY
+
+10.63亿元
+
+作为：
+
+FINAL_REPORTED_PROJECT_TOTAL_INVESTMENT
+
+==================================================
+9. 109 km管道容量不要用于U CAPEX缩放
+==================================================
+
+公开资料显示109 km长输管道：
+
+设计/输送能力可达到约170万吨CO2/年。
+
+这属于：
+
+T-side transport capacity
+
+不是：
+
+U-side EOR/storage reference capacity。
+
+因此：
+
+禁止使用：
+
+1.70 Mt/year
+
+作为U CAPEX的reference capacity。
+
+U CAPEX继续使用：
+
+0.70 Mt/year
+
+这是发行人正式报告对
+胜利油田CCUS驱油封存项目的年封存能力描述。
+
+==================================================
+10. 不修改已经授权的双流结构
+==================================================
+
+继续：
+
+Q_bar = 0.50 Mt/year
+
+xi = 0.20
+
+q_u = EOR route
+
+q_s = dedicated storage route
+
+U只有一个：
+
+x_U
+
+U CAPEX仍是：
+
+Integrated downstream utilization-and-storage platform CAPEX
+
+不要拆成：
+
+EOR CAPEX
++
+storage CAPEX
+
+不要新建第二个U投资状态。
+
+==================================================
+11. 运输管道如何处理
+==================================================
+
+109 km管道属于运输模块 T 的资产/资源边界。
+
+因此：
+
+不能再次进入：
+
+U capex_initial。
+
+当前：
+
+transport_market_price = 125 CNY/t
+
+继续只是：
+
+MODEL_ASSUMPTION
+internal transfer price benchmark
+
+真实运输资源成本：
+
+继续按单独 transport audit 处理。
+
+不要因为确认pipeline excluded，
+就自行新增加一笔pipeline CAPEX，
+除非当前T模块正式设计要求单独资本化且有完整来源。
+
+==================================================
+12. 更新资产边界判定文件
+==================================================
+
+更新：
+
+U_CAPEX_ASSET_BOUNDARY_DECISION.json
+
+固定：
+
+{
+  "reference_project_capex_million_cny": 1063.0,
+  "reference_capacity_mt_per_year": 0.70,
+  "pipeline_length_km": 109,
+  "classification": "PIPELINE_EXCLUDED",
+  "pipeline_capex_million_cny": null,
+  "net_reference_u_capex_million_cny": 1063.0,
+  "formal_scaled_u_capex_million_cny": 759.2857142857143
+}
+
+decision_basis必须写：
+
+1.
+10.63亿元对应高89-樊142驱油封存示范工程。
+
+2.
+该工程依据石化股份油〔2021〕146号建设。
+
+3.
+109 km CO2输送管道依据独立批准文件：
+石化股份计〔2022〕78号。
+
+4.
+高89-樊142工程2022年8月已正式注气运行。
+
+5.
+109 km长输管道直到2023年7月才正式投运。
+
+6.
+管道投运前CCUS项目采用槽车运输。
+
+因此从：
+
+项目批准
+工程资产
+建设时间
+投运时间
+
+四个维度均支持：
+
+PIPELINE_EXCLUDED。
+
+==================================================
+13. 证据等级
+==================================================
+
+该判定主要证据均来自：
+
+中国石化发行人正式年度报告
+中国石化官方招标投标交易平台
+中国石化官方项目时间线
+
+因此：
+
+asset_boundary_evidence_grade
+=
+A
+
+不要再将：
+
+"10.63是否包含109km管道"
+
+标记为 unresolved。
+
+==================================================
+14. 新增测试
+==================================================
+
+执行此前授权的U CAPEX八项测试。
+
+此外增加：
+
+Test:
+pipeline CAPEX / transport cost changes
+
+不得改变：
+
+utilization_storage.capex_initial
+=
+759.2857142857143
+
+除非U CAPEX source configuration本身被用户明确修改。
+
+并验证：
+
+changing xi
+
+不得改变U CAPEX。
+
+==================================================
+15. 继续后续来源审计
+==================================================
+
+U CAPEX资产边界问题到此解决。
+
+不要再就：
+
+10.63是否包含109 km pipeline
+
+询问用户。
+
+继续审核：
+
+- official carbon-price series
+- capture CAPEX
+- capture OPEX
+- EOR revenue
+- EOR operating cost
+- effective abatement
+- transport real cost
+
+GATE_SOURCE_AUDIT全部通过后，
+再启动正式source-backed计算。

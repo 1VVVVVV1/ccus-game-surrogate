@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from .config import FEATURES, MODES, BASELINE
 from .scenario_solver import solve_scenario
+from .accounting_validation import static_accounting_passes
 from .sobol_design import design
 from .reproducibility import (identity, read_json, write_json, write_csv, sha256, append_progress)
 
@@ -56,8 +57,9 @@ def validate_rows(frame, expected_ids):
         for name in ("mixed_equilibrium_state_probability", "multiple_pure_equilibrium_state_probability"):
             if not 0 <= row[name] <= 1:
                 failures.append("complexity_probability")
-        for target, tolerance in (("max_static_accounting_error",1e-10),
-                                  ("max_backward_forward_value_error",1e-8),
+        if not static_accounting_passes(row["max_static_accounting_error"]):
+            failures.append("max_static_accounting_error")
+        for target, tolerance in (("max_backward_forward_value_error",1e-8),
                                   ("max_probability_mass_error",1e-12)):
             if not math.isfinite(row[target]) or not row[target] < tolerance:
                 failures.append(target)

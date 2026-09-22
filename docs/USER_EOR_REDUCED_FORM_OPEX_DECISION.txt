@@ -1,0 +1,456 @@
+用户决定：简化参数校准原则，并结束当前 EOR 固定维护费拆分问题。
+
+本研究是随机动态投资博弈，
+不是油藏工程成本模型。
+
+对于模型只需要单一 reduced-form 参数的地方，
+优先采用高质量期刊或权威报告中的代表性单值，
+不再为了重建工程细项进行不必要的逐井、逐设备、
+逐年度成本拆分。
+
+==================================================
+1. EOR OPEX 正式简化
+==================================================
+
+取消正式模型中的：
+
+Li/Miao EOR fixed-maintenance decomposition
+
+不再继续追查：
+
+- new well maintenance base
+- converted well maintenance base
+- abandonment well allocation
+- gathering-line maintenance base
+- fixed injection O&M decomposition
+- fixed recycling O&M decomposition
+
+这些资料保留为审计参考，
+但不进入正式参数。
+
+==================================================
+2. 正式 EOR operating cost
+==================================================
+
+采用：
+
+Guo, J.-X.,
+Huang, C.,
+Wang, J.-L.,
+Meng, X.-Y.
+
+Integrated operation for the planning of CO2 capture path
+in CCS-EOR project.
+
+Journal of Petroleum Science and Engineering
+186 (2020) 106720.
+
+DOI:
+10.1016/j.petrol.2019.106720
+
+该论文 Table 1 明确设定：
+
+EOR operating and maintenance costs:
+
+h = 15 USD/tCO2
+
+而其模型中：
+
+EOR cost = h × injected CO2
+
+论文同时明确说明：
+
+recycling usage cost is included in
+the EOR operating cost h.
+
+因此正式采用：
+
+eor_operating_cost
+=
+15 USD/tCO2
+
+==================================================
+3. CNY换算
+==================================================
+
+采用国家统计局公布的2020年全年平均汇率：
+
+1 USD
+=
+6.8974 CNY
+
+因此：
+
+15 × 6.8974
+=
+103.461 CNY/tCO2
+
+正式参数：
+
+utilization_storage.utilization_cost_per_ton
+=
+103.461
+
+unit:
+CNY/t fresh CO2
+
+==================================================
+4. 参数身份
+==================================================
+
+status:
+
+MODEL_ASSUMPTION
+
+不要标：
+
+EMPIRICAL
+
+因为：
+
+15 USD/tCO2是Guo et al.经济模型中的
+代表性EOR O&M参数，
+不是齐鲁—胜利项目实际财务报表观测值。
+
+建议：
+
+source_grade:
+A-
+
+paper_use:
+FORMAL_EOR_REDUCED_FORM_OPEX_BENCHMARK
+
+uncertainty_note:
+
+"Formal EOR operating cost is represented by the
+15 USD/tCO2 O&M benchmark used by Guo et al. (2020).
+The value is converted using the official 2020 annual
+average CNY/USD exchange rate. It is a literature-anchored
+model assumption rather than an observed Qilu-Shengli cost."
+
+==================================================
+5. 取消EOR固定维护费分量
+==================================================
+
+正式模型中：
+
+EOR-specific fixed OPEX component
+=
+0
+
+不要再单独加入：
+
+0.04 × injection capital
+0.02 × production-well capital
+0.16 × recycling capital
+
+也不要采用：
+
+10.9536 million USD/year
+
+这一此前条件计算。
+
+原因：
+
+正式模型已经采用：
+
+103.461 CNY/tCO2
+
+作为完整的 reduced-form EOR O&M benchmark。
+
+继续加入固定EOR维护费会造成重复计费。
+
+==================================================
+6. 4.964 USD/t不得再次叠加
+==================================================
+
+此前根据：
+
+rho_R = 1.0
+
+计算得到：
+
+injection + recycle electricity
+=
+4.964 USD/t fresh CO2
+
+保留为：
+
+REFERENCE_COMPONENT_CHECK_ONLY
+
+不得再加到：
+
+15 USD/tCO2
+
+之上。
+
+原因：
+
+Guo et al. 明确说明：
+
+recycling usage cost
+is included in EOR operating cost h.
+
+所以：
+
+formal EOR OPEX
+=
+15 USD/tCO2
+
+不是：
+
+15 + 4.964 USD/tCO2
+
+==================================================
+7. Li / Miao的复杂成本表如何处理
+==================================================
+
+Li 2022：
+
+保留为：
+
+PROJECT_SPECIFIC_TECHNO_ECONOMIC_REFERENCE
+
+Miao 2025：
+
+保留为：
+
+PROJECT_SPECIFIC_CROSS_VALIDATION_REFERENCE
+
+已有：
+
+EOR_OPEX_COMPONENT_CROSSWALK
+
+不删除。
+
+但正式参数不再从这些组件重新构造。
+
+统一标记：
+
+REFERENCE_ONLY_NOT_USED_IN_FORMAL_EOR_OPEX
+
+==================================================
+8. 回收比仍保留
+==================================================
+
+已经批准：
+
+eor_recycle_ratio
+=
+1.0
+
+继续保留。
+
+其用途：
+
+- 描述内部EOR处理工作量；
+- 技术解释；
+- 能耗/文献一致性检查。
+
+但不再需要通过它计算正式EOR OPEX。
+
+即：
+
+rho_R = 1.0
+
+不再导致额外：
+
+recycle electricity cost
+
+加入103.461。
+
+==================================================
+9. 4:1换油率继续保留
+==================================================
+
+正式收益：
+
+Q_oil
+=
+q_u / 4
+
+EOR revenue
+=
+(q_u / 4) × P_oil
+
+保持不变。
+
+因此正式EOR利用路径可简化为：
+
+gross revenue per tCO2:
+P_o = P_oil / 4
+
+operating cost per tCO2:
+c_u = 103.461 CNY/tCO2
+
+net operating margin before CO2 transaction:
+P_o - c_u
+
+==================================================
+10. q_u成本公式
+==================================================
+
+正式利用成本：
+
+C_EOR
+=
+103.461 × q_u_tonnes
+
+注意：
+
+当前求解器如果q_u单位是Mt/year，
+
+必须：
+
+q_u_tonnes
+=
+q_u × 1e6
+
+之后再乘：
+
+103.461 CNY/t
+
+保持现有million-CNY单位换算规则。
+
+==================================================
+11. 本次STOP解除
+==================================================
+
+以下停止点全部解除：
+
+EOR_FIXED_MAINTENANCE_BASE
+
+Li well-maintenance capital-base ambiguity
+
+Miao fixed-cost aggregation ambiguity
+
+不再询问：
+
+“新井还是整项资本作为维护费基数”。
+
+答案：
+
+均不采用。
+
+正式模型改用：
+
+single reduced-form EOR O&M cost
+=
+103.461 CNY/tCO2.
+
+==================================================
+12. 测试
+==================================================
+
+新增/修改测试：
+
+1.
+q_u=0
+→ EOR variable OPEX=0
+
+2.
+q_u=1 tonne
+→ EOR OPEX=103.461 CNY
+
+3.
+q_u翻倍
+→ EOR OPEX严格翻倍
+
+4.
+rho_R改变
+不得改变正式103.461单位成本
+
+5.
+Li/Miao fixed fees
+不得再次进入formal EOR OPEX
+
+6.
+4.964 USD/t electricity component
+不得重复加入
+
+7.
+EOR CAPEX 759.2857142857143 million CNY
+保持独立
+
+8.
+109 km transport cost
+不得进入EOR OPEX
+
+9.
+storage q_s cost
+不得进入EOR OPEX
+
+==================================================
+13. 论文方法说明
+==================================================
+
+正式表述建议：
+
+"Consistent with reduced-form CCUS investment studies,
+the EOR operating stage is represented by a single
+flow-proportional operating and maintenance cost rather
+than a detailed well-level cost model. We adopt the
+15 USD/tCO2 EOR O&M benchmark reported by
+Guo et al. (2020), which explicitly incorporates CO2
+recycling costs. Using China's official 2020 annual
+average exchange rate, this corresponds to
+103.461 CNY/tCO2."
+
+并说明：
+
+"This value is treated as a literature-anchored model
+assumption, not as an observed operating cost of the
+Qilu-Shengli project."
+
+==================================================
+14. 今后source audit统一执行原则
+==================================================
+
+从现在开始：
+
+对于模型需要的标量参数，
+
+优先级：
+
+1. 同类中国项目的高质量同行评审文献直接单值；
+2. 国际顶级/高认可度同行评审文献代表值；
+3. IEA / IPCC / DOE-NETL / Global CCS Institute /
+   中国政府或央企正式报告；
+4. 文献给定合理区间时使用有明确规则的代表值；
+5. 最后才使用透明MODEL_ASSUMPTION。
+
+不要为了获得一个标量：
+
+- 重建整篇论文工程模型；
+- 数字化年度曲线；
+- 拆逐井资产；
+- 推算设备级维修费；
+- 重建油藏模拟；
+- 引入不必要的新状态变量。
+
+只要：
+
+来源可靠
+经济含义一致
+量纲一致
+资产边界不重复
+论文中透明说明
+
+即可进入formal source-backed model。
+
+==================================================
+15. 只有以下情况才STOP
+==================================================
+
+以后只有当：
+
+A. 同一候选参数存在数量级明显不同的高质量来源；
+B. 参数选择会改变模型机制而非仅改变数值；
+C. 会造成明确的CAPEX/OPEX双重计费；
+D. 没有任何可靠来源或合理benchmark；
+
+才再次：
+
+STOP_FOR_USER_DECISION。
+
+不要因为文献没有提供设备级拆分而STOP。

@@ -1,0 +1,762 @@
+用户决定：允许对 Li et al. (2022) Fig. 5 进行受控图像数字化，
+但采用“MINIMUM-NECESSARY DIGITIZATION”原则。
+
+不要为了重建论文全部年度路径，
+对所有曲线无差别估读。
+
+本决定解决：
+
+STOP_FOR_USER_DECISION_eor_annual_data
+
+==================================================
+1. 首先修正一个方法问题
+==================================================
+
+当前正式EOR variable OPEX公式为：
+
+V_t
+=
+0.085 * [
+    10.2 * (F_t + R_t)
+    + 38 * R_t
+    + 22 * B_t
+]
++
+8.2 * B_t
+
+其中：
+
+F_t = fresh CO2
+R_t = recycled CO2
+B_t = oil production in bbl
+
+因此生命周期总变动费：
+
+sum_t V_t
+
+可以直接写成：
+
+V_total
+=
+0.085 * [
+    10.2 * (sum F + sum R)
+    + 38 * sum R
+    + 22 * sum B
+]
++
+8.2 * sum B
+
+所以：
+
+正式 stationary utilization_cost_per_ton
+
+只需要：
+
+sum F
+sum R
+sum B
+
+不需要15个年度点的时序结构。
+
+==================================================
+2. 已有精确累计值优先于图像数字化
+==================================================
+
+Li 2022正文已经明确：
+
+sum F
+=
+10.68 Mt fresh CO2
+
+因此正式采用：
+
+Q_fresh_ref
+=
+10.68 MtCO2
+
+禁止重新从Fig.5估读fresh CO2。
+
+禁止：
+
+digitize fresh annual curve
+→ 再求和
+→ 替代10.68
+
+禁止为了让图像数据合计等于10.68而人为rescale曲线。
+
+正文明确累计值优先。
+
+==================================================
+3. oil output先判断是否需要数字化
+==================================================
+
+Li正文还给出：
+
+incremental oil
+=
+2.97 Mt oil
+
+但variable OPEX公式要求：
+
+barrels
+
+因此按以下顺序处理：
+
+A.
+优先寻找同一项目或同一论文中
+可核验的：
+
+oil density
+或
+tonne-to-barrel conversion
+
+如果存在项目适用且Grade A/A-来源，
+则：
+
+sum B
+
+由：
+
+2.97 Mt oil
+
+进行透明单位换算。
+
+这种情况下：
+
+不要数字化oil curve。
+
+B.
+如果没有可靠的项目适用油密度/桶吨换算：
+
+允许直接数字化Fig.5的oil-production曲线，
+因为Fig.5油轴本身是：
+
+thousand bbl
+
+这样可以避免自行假定油密度。
+
+不要使用无来源的：
+
+7.33 bbl/t
+7.0 bbl/t
+或任何通用石油换算系数。
+
+==================================================
+4. recycled CO2采用同样原则
+==================================================
+
+先在：
+
+Li 2022
+Miao 2025
+同项目业主资料
+
+中查找：
+
+cumulative recycled CO2
+或
+cumulative total injected CO2
+
+如果存在精确累计值：
+
+优先使用精确累计值。
+
+因为：
+
+sum R
+=
+sum I - sum F
+
+只要：
+
+sum I
+
+有可靠精确来源，
+也不需要数字化annual recycling curve。
+
+只有在：
+
+sum R
+和
+sum I
+
+均没有可靠数值来源时，
+
+才允许对Fig.5：
+
+recycled CO2
+或
+total injection
+
+中一个足够恢复sum R的系列进行数字化。
+
+不要同时数字化两个冗余系列。
+
+==================================================
+5. MINIMUM-NECESSARY原则
+==================================================
+
+最终Fig.5最多只数字化：
+
+缺失且无法由可靠累计数据得到的系列。
+
+正常情况下预期只需：
+
+recycled CO2 / total injection
+
+以及在没有可靠吨桶换算时：
+
+oil production
+
+不要数字化：
+
+fresh capture curve
+
+因为10.68 Mt已经有正文精确值。
+
+==================================================
+6. 数字化来源要求
+==================================================
+
+必须使用：
+
+ScienceDirect publisher-original Fig.5
+最高可获取分辨率图像。
+
+优先：
+
+publisher high-resolution image
+
+不要使用：
+
+论文截图二次压缩图
+搜索引擎缩略图
+ResearchGate截图
+OCR生成图
+用户手动重绘图
+
+保存：
+
+results/source_backed_formal/source_audit/
+li_fig5_digitization/
+fig5_original.*
+
+并记录：
+
+URL
+download/access date
+SHA256
+pixel dimensions
+
+==================================================
+7. 数字化必须可复现
+==================================================
+
+新增：
+
+results/source_backed_formal/source_audit/
+li_fig5_digitization/
+digitization_metadata.json
+
+至少记录：
+
+source_image_sha256
+image_width_px
+image_height_px
+
+x_axis_left_px
+x_axis_right_px
+x_axis_year_min
+x_axis_year_max
+
+left_y_axis_top_px
+left_y_axis_bottom_px
+left_y_min
+left_y_max
+
+right_y_axis_top_px
+right_y_axis_bottom_px
+right_y_min
+right_y_max
+
+series_name
+axis_used
+
+并保存每个实际使用的图上点：
+
+series
+year
+pixel_x
+pixel_y
+value
+unit
+
+==================================================
+8. 禁止曲线拟合和插值制造数据
+==================================================
+
+Fig.5有15个年度点。
+
+只读取论文图中实际的年度数据点/曲线中心位置。
+
+禁止：
+
+spline fitting
+polynomial fitting
+LOESS
+moving average
+curve smoothing
+machine-learning curve reconstruction
+
+禁止根据“曲线应该平滑”修点。
+
+禁止补造第16个或缺失年份。
+
+==================================================
+9. 双纵轴必须严格分离
+==================================================
+
+Fig.5属于双纵轴图。
+
+CO2：
+
+使用对应CO2纵轴。
+
+oil：
+
+使用对应oil纵轴。
+
+禁止用同一pixel-to-value转换公式处理两类轴。
+
+必须增加自动测试：
+
+已知纵轴tick pixel
+→ 转换后必须返回对应tick value。
+
+==================================================
+10. 数字化值的正式身份
+==================================================
+
+这些数值不是：
+
+EMPIRICAL
+
+也不是：
+
+original numerical data supplied by authors
+
+因为Li 2022中的Fig.5本身是案例研究预测/模型输入输出，
+而且现在又经过图形估读。
+
+因此registry统一：
+
+status =
+MODEL_ASSUMPTION
+
+并增加：
+
+transformation =
+DIGITIZED_FROM_PUBLISHED_FIGURE
+
+uncertainty_note =
+"Approximate value digitized from Fig. 5 of Li et al. (2022);
+the authors did not publish the underlying annual numerical
+dataset. The digitized value is not represented as an exact
+author-supplied observation."
+
+==================================================
+11. 不允许伪精度
+==================================================
+
+图像数字化原始结果可以保存完整计算精度，
+用于可重复计算。
+
+但报告和论文中：
+
+不要声称例如：
+
+R_2026 = 437,218.7362 t
+
+这种伪精确数值。
+
+年度图像值展示最多：
+
+3 significant figures
+
+或者按照图中坐标分辨率报告。
+
+最终模型系数可以保留程序计算精度，
+但必须明确其输入包含figure-digitization uncertainty。
+
+==================================================
+12. 图像估读误差必须量化
+==================================================
+
+对每个实际数字化的点保存：
+
+central_value
+lower_value
+upper_value
+
+误差范围依据：
+
+图上线宽/marker高度
++
+1 pixel digitization uncertainty
+
+换算到对应纵轴单位。
+
+不要主观设置：
+
+±5%
+±10%
+
+而应从图像分辨率转换。
+
+==================================================
+13. 正式参数只使用central digitization
+==================================================
+
+正式source-backed config：
+
+使用：
+
+central_value
+
+计算主参数。
+
+lower/upper：
+
+只保存在：
+
+SOURCE_AUDIT
+digitization uncertainty report
+
+不自动增加额外敏感性实验。
+
+不要因此扩充4096 Sobol维度。
+
+==================================================
+14. 已知正文累计值作为QA，不作为曲线校正目标
+==================================================
+
+如果为了质量检查临时数字化fresh curve：
+
+可以比较：
+
+digitized sum F
+
+vs
+
+10.68 Mt
+
+但只能做QA。
+
+不得：
+
+rescale all digitized values
+
+使其恰好满足：
+
+sum F = 10.68
+
+不得人为调整某几个年度点。
+
+如果fresh curve数字化合计与正文10.68 Mt差异：
+
+relative error <= 2%
+
+则记录：
+
+DIGITIZATION_QA_PASS
+
+如果：
+
+> 2%
+
+则：
+
+DIGITIZATION_QA_FAIL
+
+重新检查：
+
+axis calibration
+series identification
+pixel points
+
+仍超过2%时：
+
+不要使用该套数字化结果。
+
+==================================================
+15. variable OPEX最终优先使用累计量
+==================================================
+
+正式计算不要逐年计算后再求和，
+除非只是用于审计复核。
+
+使用：
+
+F_total
+R_total
+B_total
+
+直接计算：
+
+V_total
+=
+0.085 * [
+  10.2 * (F_total + R_total)
+  + 38 * R_total
+  + 22 * B_total
+]
++
+8.2 * B_total
+
+然后：
+
+c_EOR_variable
+=
+V_total / F_total
+
+其中：
+
+F_total
+=
+10.68 Mt
+
+必须注意统一：
+
+ton
+Mt
+bbl
+kWh
+USD
+
+之后才能计算。
+
+==================================================
+16. 为什么采用累计量而不是年度序列
+==================================================
+
+记录到方法文档：
+
+Because all retained Li et al. variable OPEX terms are linear
+in injected CO2, recycled CO2, and oil production, the
+stationary per-ton operating-cost mapping depends only on
+lifecycle cumulative physical quantities. Reconstructing the
+full annual trajectory would add digitization error without
+adding information to the formal cost coefficient.
+
+这是本次决定的核心。
+
+==================================================
+17. fixed OPEX完全不依赖Fig.5年度形状
+==================================================
+
+已经授权的：
+
+EOR fixed OPEX
+
+继续按照：
+
+reference annual fixed OPEX
+×
+0.10 / 0.712
+
+处理。
+
+不要让Fig.5年度波动改变：
+
+fixed OPEX scaling factor。
+
+因为：
+
+F_total = 10.68
+15 years
+
+已经得到：
+
+average fresh throughput
+=
+0.712 Mt/year
+
+无需图像估读。
+
+==================================================
+18. 如果只能数字化recycled CO2
+==================================================
+
+若最终：
+
+F_total = exact text
+
+B_total = exact text + verified conversion
+
+只有：
+
+R_total
+
+需要图像数字化，
+
+则只数字化：
+
+recycled CO2
+
+系列。
+
+这应作为首选最小数字化方案。
+
+==================================================
+19. 如果B_total也必须数字化
+==================================================
+
+如果没有可靠oil density / barrel conversion，
+
+则允许同时数字化：
+
+oil production curve
+
+然后：
+
+B_total
+=
+sum annual digitized thousand-bbl values
+
+× 1000
+
+不要再使用：
+
+2.97 Mt
+
+做强制校准。
+
+可以把：
+
+2.97 Mt
+
+作为独立物理合理性检查，
+但没有可靠密度时不要硬转换。
+
+==================================================
+20. 图像数据输出
+==================================================
+
+至少生成：
+
+li_fig5_digitized_points.csv
+li_fig5_digitized_totals.json
+li_fig5_digitization_metadata.json
+li_fig5_digitization_uncertainty.csv
+LI_FIG5_DIGITIZATION_AUDIT.md
+
+==================================================
+21. tests
+==================================================
+
+新增至少：
+
+Test 1:
+pixel→left-axis value正确。
+
+Test 2:
+pixel→right-axis value正确。
+
+Test 3:
+年份x坐标严格15点且递增。
+
+Test 4:
+正文F_total=10.68优先，
+不能被digitized fresh覆盖。
+
+Test 5:
+recycled CO2不加入fresh denominator。
+
+Test 6:
+如果只有累计量变化但年度顺序置换，
+最终c_EOR_variable完全不变。
+
+Test 7:
+禁止aggregate-rescaling-to-text-total。
+
+Test 8:
+central/lower/upper顺序正确。
+
+Test 9:
+digitized input status为MODEL_ASSUMPTION。
+
+Test 10:
+所有正式费用结果可从保存的pixel coordinates重算。
+
+==================================================
+22. 什么时候再次STOP
+==================================================
+
+只有以下情况再次：
+
+STOP_FOR_USER_DECISION
+
+A.
+无法取得publisher原始Fig.5足够分辨率图像；
+
+B.
+无法唯一识别某曲线对应哪个纵轴；
+
+C.
+必要系列被其他曲线严重遮挡，无法可靠读点；
+
+D.
+fresh curve QA误差在重新校准后仍 >2%；
+
+E.
+图中仍不能得到计算正式V_total所需的累计量。
+
+否则：
+
+不要再询问是否允许图像数字化。
+
+已经授权。
+
+==================================================
+23. 不联系作者作为前置条件
+==================================================
+
+论文写明：
+
+Data will be made available on request.
+
+可以在审计文档中记录这一事实。
+
+但本次正式校准：
+
+不以联系作者并等待回复作为前置条件。
+
+如果未来取得作者原始数据：
+
+可以另行建立新版校准，
+但不能静默覆盖当前正式run。
+
+==================================================
+24. 本次决定的最终结论
+==================================================
+
+授权：
+
+YES — controlled figure digitization.
+
+但正式原则是：
+
+EXACT TEXTUAL AGGREGATE
+>
+VERIFIED UNIT CONVERSION
+>
+MINIMUM NECESSARY FIGURE DIGITIZATION
+
+而不是：
+
+DIGITIZE ALL ANNUAL CURVES.
+
+继续完成EOR OPEX来源闭环。
+
+不要启动12288行正式运行，
+直到整个SOURCE_AUDIT_GATE通过。

@@ -1,0 +1,357 @@
+用户决定：
+
+source-backed 正式模型统一经济折现率采用：
+
+economic_discount_rate = 0.08
+
+即：
+
+r = 8% / year
+
+RL / dynamic discount factor 若需要对应：
+
+gamma = 1 / (1 + 0.08)
+      = 0.9259259259259259
+
+==================================================
+1. 正式参数定位
+==================================================
+
+parameter_key:
+simulation.economic_discount_rate
+
+formal_value:
+0.08
+
+unit:
+fraction/year
+
+status:
+MODEL_ASSUMPTION
+
+不要标记为：
+
+EMPIRICAL
+
+不要声称：
+
+8% 是中国 CCUS 项目的统一实际融资成本。
+
+==================================================
+2. 主依据
+==================================================
+
+主方法依据：
+
+International Energy Agency (IEA)
+CCUS in Clean Energy Transitions
+2020
+
+IEA 在其 CCUS 系统分析中明确采用：
+
+representative discount rate = 8%
+
+并使用：
+
+system lifetime = 30 years
+
+这与本研究的：
+
+30-year integrated CCUS system evaluation
+
+口径一致。
+
+因此本项目选择：
+
+8%
+
+作为跨：
+
+capture
+transport
+utilization/storage
+TRANSFER
+JOINT_VENTURE
+STATE_OWNED
+
+统一比较所使用的经济折现率。
+
+==================================================
+3. Wei 2015 的 12% 如何处理
+==================================================
+
+Wei et al. (2015):
+
+Economic evaluation on CO2-EOR of onshore oil fields in China
+International Journal of Greenhouse Gas Control
+DOI:
+10.1016/j.ijggc.2015.01.014
+
+其中：
+
+discount rate = 12%
+
+继续登记。
+
+但是状态必须为：
+
+MODEL_ASSUMPTION
+
+paper_use:
+
+CO2-EOR literature reference only
+
+不得进入：
+
+simulation.economic_discount_rate
+
+不得让：
+
+U 使用 12%
+C 使用 8%
+
+本研究正式动态博弈禁止主体使用不同 discount rates。
+
+==================================================
+4. 为什么不使用12%作为统一正式值
+==================================================
+
+固定解释：
+
+12% 来自以中国陆上 CO2-EOR 油田为对象的
+技术经济评价设定。
+
+本研究则评价：
+
+capture source
++
+transport
++
+EOR/storage
++
+alternative organizational structures
+
+组成的完整 CCUS value chain。
+
+因此使用：
+
+8% integrated-system benchmark
+
+而不是把：
+
+EOR-specific 12%
+
+扩展到整个 CCUS 链。
+
+这属于：
+
+scope-consistency decision
+
+不是因为8%产生更高NPV。
+
+==================================================
+5. Yuan 2023 的10%
+==================================================
+
+Yuan et al. 2023 使用：
+
+10%
+
+作为其燃煤电厂 CCUS 情景经济评价假设。
+
+只作为：
+
+independent literature reference
+
+登记。
+
+不得：
+
+8%、10%、12%取平均。
+
+不得选择10%作为折中值。
+
+不得开展折现率 sensitivity，
+除非用户以后明确要求。
+
+==================================================
+6. 参数注册表建议新增三行/核验已有行
+==================================================
+
+A.
+
+parameter_key:
+simulation.economic_discount_rate
+
+formal_value:
+0.08
+
+status:
+MODEL_ASSUMPTION
+
+source:
+IEA 2020
+
+paper_use:
+FORMAL_SOURCE_BACKED_MODEL
+
+B.
+
+parameter_key:
+literature.wei2015.discount_rate
+
+formal_value:
+0.12
+
+status:
+MODEL_ASSUMPTION
+
+paper_use:
+REFERENCE_ONLY_CO2_EOR
+
+C.
+
+parameter_key:
+literature.yuan2023.discount_rate
+
+formal_value:
+0.10
+
+status:
+MODEL_ASSUMPTION
+
+paper_use:
+REFERENCE_ONLY_COAL_CCUS
+
+==================================================
+7. 30年 horizon
+==================================================
+
+当前：
+
+simulation.horizon = 30 years
+
+继续保留。
+
+但 horizon 的 source audit 仍按规范完成。
+
+如果 IEA 原文已经完成核验并明确支持：
+
+system lifetime assumptions = 30 years
+
+则可登记为：
+
+MODEL_ASSUMPTION_WITH_AUTHORITATIVE_BENCHMARK
+
+如果当前 status 枚举不允许该名称，则仍使用：
+
+MODEL_ASSUMPTION
+
+并在 note 中说明：
+
+"30-year system lifetime benchmark consistent with
+IEA CCUS in Clean Energy Transitions."
+
+不要为了和 Wei 的12年 EOR lifetime一致而改成12年。
+
+==================================================
+8. 统一动态折现
+==================================================
+
+所有模式必须统一：
+
+gamma
+=
+1 / 1.08
+
+TRANSFER:
+C/U/T system accounting统一折现。
+
+JOINT_VENTURE:
+JV/application/system统一折现。
+
+STATE_OWNED:
+system统一折现。
+
+COMMIT_NOW value：
+同样使用8%。
+
+boundary V2：
+同样使用8%。
+
+surrogate exact targets：
+同样基于8%。
+
+==================================================
+9. 禁止事项
+==================================================
+
+不要：
+
+- 同时运行8%和12%的双正式版本；
+- 自动增加 discount-rate sensitivity；
+- 因为12%使NPV更低而选择8%；
+- 因为8%和旧模型相同而把它说成经验验证；
+- 把Wei 12%删除；
+- 把Yuan 10%删除。
+
+12%和10%都保留为 literature references。
+
+==================================================
+10. 审计记录
+==================================================
+
+在：
+
+docs/SOURCE_AUDIT.md
+config/parameter_registry.source_backed.csv
+PROJECT_PROGRESS.md
+docs/USER_DECISIONS.md
+
+记录：
+
+FORMAL UNIFIED DISCOUNT RATE DECISION:
+8%
+
+Decision basis:
+integrated CCUS system scope consistency.
+
+IEA benchmark:
+8% representative discount rate,
+30-year system lifetime.
+
+Wei 2015:
+12% retained as EOR-specific reference only.
+
+Yuan 2023:
+10% retained as independent CCUS literature reference only.
+
+==================================================
+11. 继续执行
+==================================================
+
+这一问题已经解决。
+
+不要再次就：
+
+8% vs 12%
+
+询问用户。
+
+继续其余 source audit：
+
+- carbon official time series
+- capture CAPEX
+- capture OPEX
+- utilization fraction
+- U CAPEX
+- EOR revenue
+- EOR cost
+- effective abatement
+- transport real cost
+
+只有剩余核心参数无法唯一确定时，
+再 STOP_FOR_USER_DECISION。
+
+在 GATE_SOURCE_AUDIT 全部通过前，
+仍不要启动正式 12288 行 source-backed run。

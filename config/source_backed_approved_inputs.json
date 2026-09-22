@@ -1,0 +1,81 @@
+{
+  "_status": "SOURCE_AUDIT_COMPLETE_INPUTS;FORMAL_CODE_NOT_YET_FROZEN",
+  "_note": "All economic scalar sources and official carbon-series completeness audited. Full source-backed numerical run not started.",
+  "simulation": {
+    "economic_discount_rate": 0.08,
+    "horizon": 30,
+    "dt_years": 1.0
+  },
+  "co2_quantity": {
+    "Q_bar": 0.5,
+    "utilization_fraction": 0.2
+  },
+  "utilization_storage": {
+    "capex_initial": 759.2857142857143,
+    "eor_co2_oil_ratio": 4.0,
+    "eor_recycle_ratio": 1.0,
+    "utilization_cost_per_ton": 103.461,
+    "eor_specific_fixed_opex_component": 0.0,
+    "storage_cost_per_ton": 55.0,
+    "utilization_revenue_per_ton": 1101.85965,
+    "capex_decline_rate": 0.0,
+    "fixed_opex": 0.0,
+    "idle_cost": 0.0,
+    "storage_subsidy_per_ton": 0.0
+  },
+  "scenario_domain": {
+    "capex_U_multiplier": [
+      0.7,
+      1.3
+    ],
+    "transport_market_price": [
+      75.0,
+      200.0
+    ],
+    "effective_abatement_fraction": [
+      0.5,
+      1.0
+    ],
+    "storage_subsidy": [
+      0.0,
+      120.0
+    ],
+    "capex_C_multiplier": [
+      0.7,
+      1.3
+    ],
+    "carbon_scale": [
+      0.5,
+      6.25
+    ]
+  },
+  "transport_market": {
+    "market_price_per_ton": 125.0,
+    "variable_opex_per_ton": 28.1656,
+    "fixed_opex_if_active": 0.0
+  },
+  "carbon_source": {
+    "variable_opex_per_ton": 240.0,
+    "capex_initial": 385.0,
+    "capex_decline_rate": 0.0,
+    "fixed_opex": 0.0,
+    "idle_cost": 0.0
+  },
+  "carbon_market": {
+    "effective_abatement_fraction": 0.7
+  },
+  "joint_venture": {
+    "theta_C": 0.5,
+    "theta_T": 0.2,
+    "theta_U": 0.3
+  },
+  "bargaining": {
+    "co2_seller_weight": 0.5,
+    "storage_provider_weight": 0.5
+  },
+  "carbon_price": {
+    "P0": 95.63,
+    "mu": 0.16886265073995846,
+    "sigma": 0.3106155387941257
+  }
+}

@@ -1,0 +1,439 @@
+用户决定：采用统一的“来源内部冲突处理规则”。
+
+本规则适用于 Wei et al. (2015) 以及后续所有 source-backed 文献。
+
+==================================================
+1. 总体优先级
+==================================================
+
+同一篇论文内部出现：
+
+表格
+正文
+公式
+图
+附录
+
+不一致时，按以下优先级处理：
+
+Priority 1:
+publisher corrigendum / erratum / supplementary material
+
+Priority 2:
+publisher PDF 中明确的正式表格和参数表
+
+Priority 3:
+publisher PDF 中正式公式
+
+Priority 4:
+publisher HTML 中的正式表格
+
+Priority 5:
+正文叙述
+
+Priority 6:
+二手数据库、摘要、索引页
+
+不能用低优先级内容覆盖高优先级内容。
+
+==================================================
+2. 数值参数冲突：参数表优先
+==================================================
+
+如果：
+
+- Table 明确列出一个参数；
+- 正文另给不同数值；
+- 两者单位相同；
+- 两者明显指向同一经济变量；
+- 没有 corrigendum / erratum 解释差异；
+
+则正式 source-backed 参数：
+
+优先采用 Table 中的值。
+
+原因：
+
+参数表通常是作者用于模型设定和数值计算的正式 input block，
+比正文中的叙述性数字具有更高的可复现性。
+
+不得：
+
+- 两个值取平均；
+- 自行判断哪个“更合理”；
+- 根据结果好坏选择；
+- 用中位数；
+- 做加权平均。
+
+==================================================
+3. Wei 2015 fluid pumping / fluid lifting 冲突
+==================================================
+
+当前已确认：
+
+Table 1:
+fluid pumping = 1 USD/STB
+
+§2.3.2:
+fluid lifting = 0.25 USD/STB
+
+在没有 publisher correction、
+原始引用文献或作者说明能够解释二者差异之前：
+
+正式参数采用：
+
+fluid_pumping_cost
+=
+1.0 USD/STB
+
+source_status:
+SOURCE_INTERNAL_CONFLICT_TABLE_SELECTED
+
+source_note:
+"Table 1 reports 1 USD/STB, while Section 2.3.2 reports
+0.25 USD/STB for fluid lifting. The table value is used
+as the formal model input under the project's
+table-over-prose conflict rule."
+
+同时必须保留：
+
+conflicting_text_value
+=
+0.25 USD/STB
+
+但：
+
+0.25 不进入正式 config。
+
+不得把它用于：
+
+baseline
+surrogate
+boundary
+
+也不要做 1 vs 0.25 的 sensitivity，
+除非用户以后明确要求。
+
+==================================================
+4. 公式冲突不能按“表格优先”简单处理
+==================================================
+
+公式和系数表冲突时必须分开判断：
+
+A. equation form 是否明确；
+B. coefficient 是否明确。
+
+如果：
+
+equation form 明确
+但 coefficient 与地区表不同，
+
+则优先使用：
+
+地区/国家对应的 coefficient table。
+
+例如：
+
+如果公式（9）函数形式本身明确，
+而 Table 2 给出 China-specific coefficients，
+
+则正式中国模型应使用：
+
+Table 2 China coefficients。
+
+但是必须在文档记录：
+
+FORMULA_COEFFICIENT_CONFLICT_TABLE_COEFFICIENT_SELECTED
+
+==================================================
+5. 如果公式本身存在歧义
+==================================================
+
+例如当前公式（7）：
+
+网页显示两个分支都是相同指数式，
+但正文说应该存在：
+
+power function
+或
+exponential function
+
+此时：
+
+禁止自行补写公式。
+
+禁止根据常识推测：
+
+“另一个应该是幂函数”。
+
+处理顺序：
+
+1. 查 publisher PDF；
+2. 查 supplementary material；
+3. 查 corrigendum / erratum；
+4. 查该公式明确引用的原始来源；
+5. 如果原始来源能唯一恢复公式，才实现；
+6. 否则标记：
+
+FORMULA_UNRESOLVED
+
+不要进入正式 U CAPEX 计算。
+
+==================================================
+6. 公式（9）处理规则
+==================================================
+
+如果：
+
+公式形式可从 PDF / 原始来源唯一确认，
+
+则：
+
+使用该公式形式
++
+Table 2 的 China-specific coefficients。
+
+如果：
+
+公式形式本身仍无法唯一确认，
+
+则：
+
+FORMULA_9_UNRESOLVED
+
+停止依赖公式（9）的 U CAPEX 模块。
+
+不得自行把网页公式和 Table 2 系数拼接，
+除非公式结构已经被正式来源确认。
+
+==================================================
+7. 公式（12）CRF 处理规则
+==================================================
+
+当前网页公式存在疑点。
+
+不得自动替换成教科书常见：
+
+CRF = r(1+r)^n / ((1+r)^n - 1)
+
+即使这个公式在金融数学中很常见，
+也不能声称这就是 Wei 2015 原式。
+
+处理顺序：
+
+publisher PDF
+→ corrigendum
+→ cited original source
+→ authors' supplementary information
+
+如果仍无法确认：
+
+标记：
+
+WEI_CRF_FORMULA_UNRESOLVED
+
+如果本项目可以直接用：
+
+NPV discounted cash-flow
+
+而不需要复现 Wei 的 annualized CRF cost model，
+
+则 source-backed 主模型不要使用该 CRF 公式。
+
+不要因为一个不必要的辅助公式阻塞整个动态博弈模型。
+
+==================================================
+8. 优先“只使用明确数据”，不要强行复刻全部 Wei 模型
+==================================================
+
+本项目并不要求完整复刻 Wei 2015。
+
+Wei 2015 的作用是：
+
+给 U 端 CO2-EOR 提供可靠技术经济来源。
+
+因此只使用：
+
+明确
+可核验
+单位明确
+资产边界明确
+
+的参数。
+
+不要求把论文全部 CAPEX/O&M 公式都塞进现有模型。
+
+如果某个 Wei 公式存在永久歧义，
+但我们可以从同项目或其他 Grade A/A- 来源
+获得一个直接的：
+
+U CAPEX
+或
+U OPEX
+
+则优先采用后者。
+
+==================================================
+9. 不允许双重计费
+==================================================
+
+Wei 2015 中：
+
+compression cost
+recycling cost
+
+部分单位成本可能已经包含：
+
+levelized CAPEX
++
+O&M
+
+因此：
+
+不能同时：
+
+把其作为 per-ton OPEX
+
+又把同一设备 CAPEX
+再次加入 utilization CAPEX。
+
+任何 cost item 必须在 registry 增加：
+
+cost_boundary
+
+只允许：
+
+CAPEX_ONLY
+OPEX_ONLY
+LEVELIZED_CAPEX_PLUS_OPEX
+REFERENCE_ONLY
+
+如果：
+
+LEVELIZED_CAPEX_PLUS_OPEX
+
+则不得再与对应设备 CAPEX 重复计费。
+
+==================================================
+10. 文献冲突状态字段
+==================================================
+
+parameter_registry 增加：
+
+source_conflict_status
+
+只允许：
+
+NO_CONFLICT
+
+TABLE_VS_TEXT_TABLE_SELECTED
+
+FORMULA_VS_COEFFICIENT_TABLE_SELECTED
+
+RESOLVED_BY_PDF
+
+RESOLVED_BY_ERRATUM
+
+RESOLVED_BY_ORIGINAL_SOURCE
+
+UNRESOLVED
+
+==================================================
+11. unresolved 公式不一定阻塞整个来源 Gate
+==================================================
+
+只有当某 unresolved 公式是：
+
+正式 config 中某核心参数的唯一来源
+
+时：
+
+GATE_SOURCE_AUDIT = FAIL
+
+如果该公式只是：
+
+reference model detail
+
+而正式 config 并不使用它，
+
+则：
+
+可以保留：
+
+UNRESOLVED_REFERENCE_ONLY
+
+不阻塞 Source Audit Gate。
+
+==================================================
+12. Wei 2015 本轮具体决定
+==================================================
+
+现在固定：
+
+fluid pumping:
+1 USD/STB
+正式采用 Table 1。
+
+0.25 USD/STB:
+仅保留为正文冲突值，不进入正式模型。
+
+公式（7）：
+继续查 PDF / 原始来源；
+未确认前不实现。
+
+公式（9）：
+先确认 equation form；
+确认后使用 China-specific Table 2 coefficients；
+未确认前不实现。
+
+公式（12）：
+不自行修正；
+如果本项目不需要 CRF，则不使用；
+如果正式模型必须依赖它，继续追溯原始来源。
+
+==================================================
+13. Yuan 2023 不用于解决 Wei 内部冲突
+==================================================
+
+不要用另一篇文献的数值来决定：
+
+Wei Table 1
+和
+Wei正文
+
+谁“正确”。
+
+Yuan 2023 可以作为：
+
+independent cross-reference
+
+但不能当成 Wei 论文内部勘误。
+
+==================================================
+14. 继续执行
+==================================================
+
+按以上规则更新：
+
+docs/WEI_2015_FORMULA_AUDIT.md
+config/parameter_registry.source_backed.csv
+docs/SOURCE_AUDIT.md
+PROJECT_PROGRESS.md
+
+然后继续其余来源审计。
+
+如果后续又出现：
+
+table vs prose
+
+同类数值冲突：
+
+直接按本规则执行，
+不需要再次询问。
+
+如果出现：
+
+formula structure 无法唯一确认
+且它是正式模型不可替代的核心参数来源，
+
+才再次 STOP_FOR_USER_DECISION。

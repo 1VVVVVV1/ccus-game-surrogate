@@ -1,0 +1,486 @@
+用户决定：
+
+保留现有双流结构。
+
+正式 source-backed 模型继续使用：
+
+utilization_fraction = 0.20
+
+但必须明确重新定位为：
+
+MODEL_ASSUMPTION
+
+不得标记为：
+
+EMPIRICAL
+DERIVED_FROM_EMPIRICAL
+CALIBRATED_FROM_PROJECT_DATA
+
+==================================================
+1. utilization_fraction 的正式含义重新定义
+==================================================
+
+现有变量名继续保留：
+
+utilization_fraction
+
+以避免不必要地重构已验证求解器。
+
+但正式经济含义改为：
+
+"baseline routing share of captured CO2 allocated to the
+CO2-utilization/EOR commercial route, with the remainder
+allocated to a dedicated geological-storage route."
+
+中文：
+
+“捕集 CO₂ 在‘EOR利用商业路径’与‘独立地质封存商业路径’
+之间的基准分配比例。”
+
+因此：
+
+xi = 0.20
+
+表示：
+
+20% of available captured CO2
+→ EOR utilization route
+
+80%
+→ dedicated geological-storage route
+
+不是：
+
+20% physical utilization efficiency
+
+不是：
+
+20% EOR storage ratio
+
+不是：
+
+Qilu-Shengli observed CO2 allocation
+
+不是：
+
+全国CCUS经验统计比例
+
+==================================================
+2. 齐鲁—胜利项目的作用边界
+==================================================
+
+Qilu Petrochemical–Shengli Oilfield：
+
+仅作为：
+
+- source-sink physical anchor
+- CO2-EOR route anchor
+- transport-distance anchor
+- EOR-related techno-economic evidence source
+
+不得声称：
+
+该实际项目采用：
+
+20% EOR
++
+80% independent storage
+
+这一 20/80 结构属于：
+
+本研究的 stylized downstream routing assumption。
+
+==================================================
+3. EOR伴生封存不得与独立封存重复计量
+==================================================
+
+本模型必须严格区分：
+
+q_u:
+CO2 routed to EOR/utilization pathway
+
+q_s:
+CO2 routed to dedicated geological-storage pathway
+
+EOR 路径中的 associated storage：
+
+不要再次计入 q_s。
+
+否则会造成：
+
+double counting of physical CO2
+
+因此始终保持：
+
+Q = q_u + q_s
+
+不能改成：
+
+Q = q_u + q_s + EOR_associated_storage
+
+==================================================
+4. EOR路径中的封存效应如何处理
+==================================================
+
+EOR 路径的净减排/伴生封存效应：
+
+继续通过：
+
+effective_abatement_fraction = eta
+
+这一 reduced-form 系数体现。
+
+也就是说：
+
+R_carbon
+=
+P_c * eta * Q
+
+中的 eta：
+
+统一吸收：
+
+- capture-chain residual emissions
+- EOR-associated storage effectiveness
+- storage-route net abatement effectiveness
+
+但必须明确：
+
+eta 是 reduced-form effective net-abatement proxy。
+
+不要把 EOR 路径中的伴生封存再次增加一笔 storage quantity。
+
+==================================================
+5. storage subsidy 的正式适用范围
+==================================================
+
+storage_subsidy
+
+只作用于：
+
+dedicated geological-storage route
+
+即：
+
+q_s
+
+不作用于：
+
+q_u
+
+即使 EOR 过程中存在伴生地质封存。
+
+正式解释：
+
+storage_subsidy in this model represents
+a dedicated-storage policy instrument,
+not a generic reward for all physically retained CO2.
+
+因此保持：
+
+storage subsidy revenue
+=
+S_s * q_s
+
+不要改成：
+
+S_s * (q_s + q_u)
+
+除非用户以后明确改变政策定义。
+
+==================================================
+6. storage bargaining 的正式适用范围
+==================================================
+
+TRANSFER 中：
+
+storage bargaining
+
+只针对：
+
+dedicated geological-storage service
+
+即：
+
+q_s
+
+EOR route：
+
+q_u
+
+不进入 storage-service bargaining。
+
+它只参与：
+
+CO2 sale bargaining
++
+EOR utilization economics
+
+因此不要因为 EOR 也伴生封存，
+就让 q_u 同时进入 P_s bargaining。
+
+==================================================
+7. JV 和 SOE 保持原双流结构
+==================================================
+
+JOINT_VENTURE：
+
+q_u
+=
+xi * Base * I_u
+
+q_s
+=
+(1-xi) * Base
+
+保持不变。
+
+STATE_OWNED：
+
+q_u
+=
+xi * Base
+
+q_s
+=
+(1-xi) * Base
+
+保持不变。
+
+不要因为齐鲁—胜利是 EOR 项目
+而把 JV/SOE 的 q_s 删除。
+
+==================================================
+8. 参数注册表登记
+==================================================
+
+parameter_key:
+
+co2_quantity.utilization_fraction
+
+formal_value:
+
+0.20
+
+unit:
+
+fraction
+
+status:
+
+MODEL_ASSUMPTION
+
+source_grade:
+
+N/A
+
+source_id:
+
+USER_MODEL_DESIGN
+
+paper_use:
+
+BASELINE_DOWNSTREAM_ROUTING_SHARE
+
+uncertainty_note:
+
+"The selected Qilu–Shengli project establishes the CO2-EOR
+route but does not empirically identify a 20/80 split between
+EOR utilization and dedicated geological storage.
+The 0.20 value is retained solely as a transparent structural
+model assumption required to preserve both downstream
+commercial channels."
+
+source_conflict_status:
+
+NO_CONFLICT
+
+==================================================
+9. 论文中禁止的表述
+==================================================
+
+不得写：
+
+“20% of captured CO2 is utilized in the Qilu-Shengli project.”
+
+不得写：
+
+“China CCUS projects typically utilize 20% of CO2.”
+
+不得写：
+
+“the utilization ratio is empirically calibrated at 20%.”
+
+正确写法：
+
+“A baseline routing share of 20% is assumed for the
+utilization/EOR pathway, while the remaining 80% is assigned
+to a dedicated geological-storage pathway. This split is a
+structural model assumption rather than an observed feature of
+the Qilu–Shengli project.”
+
+==================================================
+10. source-backed 的定义不要理解成所有参数都必须经验化
+==================================================
+
+source-backed formal model 允许同时存在：
+
+EMPIRICAL
+DERIVED_FROM_EMPIRICAL
+CALIBRATED_FROM_OFFICIAL_SERIES
+MODEL_ASSUMPTION
+DESIGN_RANGE_ASSUMPTION
+
+要求是：
+
+每个参数的证据等级和身份透明，
+
+而不是：
+
+强迫每一个参数都伪装成经验数据。
+
+因此：
+
+utilization_fraction = 0.20
+
+不会因为是 MODEL_ASSUMPTION
+而导致：
+
+GATE_SOURCE_AUDIT fail。
+
+==================================================
+11. 增加一个结构一致性测试
+==================================================
+
+新增测试：
+
+xi = 0.20
+
+built_C = built_U = 1
+
+Base = 0.50
+
+在无交易摩擦的情况下：
+
+q_u = 0.10
+q_s = 0.40
+Q = 0.50
+
+要求：
+
+abs(q_u + q_s - Q) < 1e-12
+
+并验证：
+
+EOR-associated storage
+没有被额外加到 q_s。
+
+==================================================
+12. 增加 subsidy/bargaining 防双计测试
+==================================================
+
+Test A：
+
+q_u > 0
+q_s = 0
+
+则：
+
+storage_subsidy_revenue = 0
+
+Test B：
+
+TRANSFER:
+
+q_u > 0
+
+不能因为 EOR associated storage
+触发：
+
+storage_payment
+
+Test C：
+
+q_s > 0
+
+才允许：
+
+storage_payment
+storage_subsidy_revenue
+
+==================================================
+13. 文档更新
+==================================================
+
+更新：
+
+docs/SOURCE_AUDIT.md
+docs/MODEL_SPECIFICATION.md
+docs/GAME_THEORY_METHOD.md
+config/parameter_registry.source_backed.csv
+PROJECT_PROGRESS.md
+docs/USER_DECISIONS.md
+
+新增小节：
+
+"Stylized downstream CO2 routing versus EOR-associated storage"
+
+明确：
+
+EOR route
+≠
+dedicated storage route
+
+以及：
+
+EOR-associated storage is embedded in the reduced-form
+abatement/value treatment and is not counted as a second
+physical flow.
+
+==================================================
+14. 不需要重新设计模型
+==================================================
+
+这项决定只改变：
+
+参数的 provenance classification
+和论文解释口径。
+
+不要因此：
+
+- 改 q_u/q_s 公式；
+- 改 Nash bargaining；
+- 改 subsidy formula；
+- 改三种商业模式；
+- 改 source-backed project anchor；
+- 改 xi 数值；
+- 新增第三条 CO2 flow；
+- 把 EOR-associated storage 单独建成新状态。
+
+==================================================
+15. 继续来源审计
+==================================================
+
+这一问题已经解决。
+
+不要再就：
+
+xi = 0.20
+vs
+xi = 1.00
+
+询问用户。
+
+继续剩余来源审核：
+
+- official carbon-price series
+- capture CAPEX
+- capture OPEX
+- U CAPEX
+- EOR revenue
+- EOR operating cost
+- effective abatement
+- transport real cost
+
+GATE_SOURCE_AUDIT 全部通过后，
+再启动正式 source-backed 计算。

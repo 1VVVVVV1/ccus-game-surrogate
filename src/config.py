@@ -1,10 +1,12 @@
 """Frozen model configuration and protocol constants."""
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG_PATH = ROOT / "config" / "model_config.game.json"
+CONFIG_PATH = Path(os.environ.get("CCUS_CONFIG_PATH", ROOT / "config" / "model_config.game.json"))
 CONFIG = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+SOURCE_BACKED = CONFIG_PATH.name == "model_config.source_backed.json"
 GAMMA = 1.0 / 1.08
 MODES = ("TRANSFER", "JOINT_VENTURE", "STATE_OWNED")
 FEATURES = (
@@ -22,6 +24,11 @@ TARGETS = {
     "JOINT_VENTURE": VALUE_TARGETS + PROBABILITY_TARGETS + TIME_TARGETS + PRICE_TARGETS[:1],
     "STATE_OWNED": VALUE_TARGETS[:1] + PROBABILITY_TARGETS + TIME_TARGETS,
 }
+if SOURCE_BACKED:
+    for mode in MODES:
+        TARGETS[mode] += (("commit_now_system_npv",) if mode == "STATE_OWNED" else
+                         ("commit_now_system_npv", "commit_now_value_C",
+                          "commit_now_value_U", "commit_now_value_T"))
 HGB_PARAMETERS = dict(learning_rate=0.05, max_iter=500, max_leaf_nodes=31,
                       min_samples_leaf=20, l2_regularization=1e-3, random_state=42)
 EQUILIBRIUM_TOLERANCE = CONFIG["solver"]["equilibrium_tolerance"]

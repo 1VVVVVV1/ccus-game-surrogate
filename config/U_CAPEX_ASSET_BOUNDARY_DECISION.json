@@ -1,0 +1,23 @@
+{
+  "reference_project_capex_million_cny": 1063.0,
+  "reference_capacity_mt_per_year": 0.7,
+  "pipeline_length_km": 109,
+  "classification": "PIPELINE_EXCLUDED",
+  "pipeline_capex_million_cny": null,
+  "net_reference_u_capex_million_cny": 1063.0,
+  "formal_scaled_u_capex_million_cny": 759.2857142857143,
+  "asset_boundary_evidence_grade": "A",
+  "decision_basis": [
+    "10.63亿元对应高89-樊142驱油封存示范工程。",
+    "该工程依据石化股份油〔2021〕146号建设。",
+    "109 km CO2输送管道依据独立批准文件石化股份计〔2022〕78号。",
+    "高89-樊142工程2022年8月已正式注气运行。",
+    "109 km长输管道2023年7月正式投运。",
+    "管道投运前CCUS项目采用槽车运输。"
+  ],
+  "decision_authority": "User completed boundary audit; docs/USER_PIPELINE_EXCLUDED_DECISION.txt",
+  "verification_provenance": {
+    "issuer_annual_report": "Independently downloaded and visually verified PDF pages18-19.",
+    "tender_approval_identifiers_and_truck_timeline": "Evidence supplied and adjudicated by user; primary tender documents not independently downloaded in this workspace."
+  }
+}

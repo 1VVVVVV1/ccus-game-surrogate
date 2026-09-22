@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-ALL_STAGES_COMPLETED — 当前源码正式全流程及完整 --resume 均 exit=0；Gate 1–7 全通过，53 tests passed，4096 场景/12288 行/0 求解失败，24/24 代理 target 通过。完整恢复前后全部 257 个正式文件哈希相同。61 项边界搜索完成，未保留精确 crossing（不等于证明经济边界不存在）。最终证据见文末与 results/resume_verification_PASS.json。
+SOURCE_BACKED_AUDIT_IN_PROGRESS — PIPELINE_EXCLUDED已接受，U CAPEX759.2857142857143已落实；继续剩余来源审计，未启动正式数值运行。
 
 ## 执行依据
 
@@ -796,3 +796,267 @@ Git 版本 2.53.0.windows.3。git config --get user.name 和 user.email 均 exit
 ## 新阶段：Git identity 已由用户提供
 
 用户确认仅本地工作，提交名 1VVVVVV1、邮箱 1817512522@qq.com。已初始化本地 Git 并仅写入仓库级 identity，无 remote、未上传。目录所有权来自旧沙箱，Git 命令使用单次 -c safe.directory 指定已确认项目路径，不修改全局信任或 ACL。已有正式产物哈希和研究源码 hash 核验一致。当前按指定 commit message 冻结已验证源码、测试、配置、文档及小型摘要，之后开始来源审计。
+
+
+## 2026-09-20：来源审计阶段成果及停止点
+
+本地冻结提交 4f34c2ba31dc3167e4bbfbd67d2a371c6a0d9a6f 已完成，无 remote、未上传。文献 API 预检通过；Crossref 部分查询 429 后转单 DOI/OpenAlex。已识别泰州、Carbon Neutrality、运输、Engineering 等文献，详见 docs/SOURCE_CATALOG.md。Engineering 原文核实 50–60 CNY/t 是其他 CCUS 的注入成本，按授权可取 55 作为 proxy；未将它解释为全链条成本。初步 registry 仅含此已支持值及 5 个明确模型假设，未填未验证参数。
+
+STOP_FOR_USER_DECISION：运输市场价格基准 125 CNY/t 尚无已核实 Grade A/A- 实際收费原文依据，原指定运输论文的 DOI 已双源核实但正文访问受阻，Elsevier API 仅返回书目信息。未将 0.26×距离推为收费，未假定距离或加成。依据新规范第 11/21 节暂停，等待来源或用户研究决定。其他未完成项在 SOURCE_AUDIT.md 中逐项列明，不声称已穷尽检索。
+
+原始证据 16 个文件及 SHA256 保存于 results/source_backed_formal/source_audit/evidence_manifest.json。尚未采集官方碳价序列、冻结 source-backed config、实现或运行新正式求解、代理、V2 边界与同步诊断。旧 results/formal/ 既有文件均未改动，仅按新规范新增 RUN_CLASSIFICATION.json。
+
+
+## 2026-09-20：运输定价补充授权已落实
+
+用户将 transport_market_price=125 重新定位为 MODEL_ASSUMPTION，paper_use 为 Internal transport-service transfer-price benchmark；[75,200] 为 DESIGN_RANGE_ASSUMPTION。这两项不再是 unresolved empirical parameter。registry 已更新。用户给定 0.2584 CNY/(tCO2 km) 仅登记为候选经验管道系数，明确原文数值尚未独立核验，不代表总运输成本已闭环。未假设距离、未换算总成本、未改动经济源码或旧 config。继续其余来源审计。
+
+
+## 2026-09-20：运输补充审计与新停止点
+
+- 9 行参数 registry 已核对：125 为 MODEL_ASSUMPTION；[75,200] 为 DESIGN_RANGE_ASSUMPTION；0.2584 仅为待原文核实的候选系数。未计算运输总成本。
+- 追加 S06 管道成本论文的 Crossref/OpenAlex 双源书目信息，S07 EOR 经济论文及公开版本线索。原文访问失败如实保存，未把验证页、摘要或元数据认作数值证据。
+- 新停止原因：缺少可对应本模型规模和资产边界的源—汇项目、距离及 U 端利用路线。不能任取距离，不能跨项目拼接 CAPEX/收益或自行缩放。
+- 本轮新增 STOP_FOR_USER_DECISION_transport_scope.json；历史 tariff 停止记录保留且已在当前审计说明中标明被用户决定取代。
+- 验证：CSV 固定 19 列、9 行；用户指定的分类和文字一致；冻结配置 SHA256 未变；git diff 确认 src、tests、原模型配置及既有 formal 文件无已跟踪改动。此次仅审计文档/证据更新，无需重跑经济测试。
+- 当前未执行：新 source-backed config、官方碳价校准及后续正式计算。阶段完成情况不能标记为全流程完成。
+
+
+## 2026-09-20：齐鲁—胜利授权归档及原文核验
+
+- 完整保存用户决定，新增 USER_DECISIONS 决策 004；不再询问项目、U 路线或距离选择。
+- 三篇指定论文完成双源书目交叉核对，响应、失败及哈希保存在 source_audit/eor_anchor/。Elsevier 仅元数据；Wei PDF 403、OSTI 超时、FULL 接口 429。无关搜索结果和验证码页未作为来源。
+- U CAPEX/O&M 方程、同项目输入及增量油/CO2 比率仍未形成原文证据链。按用户要求，在可核验原文之前不猜公式、不登记为已验证参数、不编写虚构成本模型。
+- 新停止点为全文/项目输入缺失，需可读原文表格；109 km 官方核验仍待完成，但不就既定选择重新询问。未运行正式 12288 行。
+- 校验冻结配置 SHA256 未变，研究源码/测试/旧 formal 无已跟踪修改。本轮只新增来源证据及审计文档，不需要运行经济求解测试。
+
+
+## 2026-09-20：Yuan PDF 核验、距离原文与捕集 OPEX 性质修正
+
+- 已读取用户 PDF，提取 8 页文本，视觉核验成本表和情景假设页。正式年份 2023；不采用文件名 2024，不将其 20 年/10%/200 km/100 元数值替代模型参数。
+- 本地同目录权威报告原文支持 109 km，registry 增至 10 行，列数仍为 19；108 km 在建条目的差异及业主交叉核验待办明确记录。
+- 自主网上取得 Carbon Neutrality HTML 全文，核实 240 为在建泰州预计 OPEX。未将预测错标为实测，也未擅自采纳为新假设。
+- Wei、Li、Miao 下载继续受限；原始请求/失败和内容有效性检查均保存。没有把返回 200 的验证码或 404 页判为成功。
+- 已检查文献下载配置：无已保存图书馆入口。需用户提供实际入口网址才能转合法机构全文访问；不再要求其逐篇下载，不使用聊天中出现过的凭据。
+- SOURCE_AUDIT 未通过，eor_cost_calibration.py 和正式计算未启动。此次变更仅审计/registry/证据，冻结配置和研究源码未改动。
+- 文本提取输出首次遇终端 GBK 编码错误；PNG 已成功生成并读取，后续文本用 UTF-8 输出完成。此为输出编码问题，不影响 PDF 原文件或证据内容。
+
+
+## 2026-09-20：用户指定 ScienceDirect 入口后浏览器核验
+
+已直接打开 Wei 2015 的 ScienceDirect 文章页。当前仅 Codex 内置浏览器可用，未连接 Chrome；页面实际显示 Are you a robot? / Cloudflare 正在验证。尚未获取文章正文或 PDF，不把访问验证页当成下载成功。等待页面自动验证结果，不操作验证码，不修改模型或正式配置。
+
+
+## 2026-09-20：Wei 原文读取成功、18 行 registry 及新来源冲突
+
+- 浏览器自动验证通过，Wei HTML 全文可读；PDF 仍在验证页，未宣称 PDF 已下载。完整导出接口不支持，保存的是原表数值和冲突段落的结构化核验摘录。
+- 原 Table 4 八项参照已登记为 MODEL_ASSUMPTION，registry 19 列/18 行；不改变正式 30 年、折现率、Nash 内生价格。
+- Table 1 举升费 1 USD/STB 对正文 0.25 USD/STB；公式（7）、（9）、（12）显示/系数疑点。没有替作者修公式，没有自选数值，没有编写臆测成本模块。
+- Li 2022 当前会话显示需要机构访问；未购买。
+- 新停止文件 STOP_FOR_USER_DECISION_wei_conflicts.json；历史访问失败文件保留为历史。冻结配置与研究源码/测试/旧正式结果未改动。
+
+## 2026-09-20：统一来源冲突规则落实
+
+- 归档用户规则 docs/USER_SOURCE_CONFLICT_RULES.txt，更新 Wei 公式审计和 SOURCE_AUDIT。
+- 参数注册表新增 cost_boundary、source_conflict_status，共21列19行。1 USD/STB 为 OPEX_ONLY；0.25 不参与正式计算。
+- 检查 src/economics.py：投资时直接扣除 CAPEX；src 无 CRF 调用。公式12保留参考，不擅自修正。
+- 公式7/9未实现；继续寻找明确直接成本，不强行完整复刻 Wei。
+- 原方法验证结果及求解代码未修改；SOURCE_AUDIT 未通过，正式计算尚未开始。
+
+## 2026-09-20：直接项目成本来源补充与核验
+
+已下载 Lu2025 同项目捕集端全文XML（125091字节），保存DOI匹配与表12/16/17摘录；发现业主驱油封存投资披露线索，但未完成原件表格/资产边界核验，不写入正式配置。详情 docs/QILU_DIRECT_COST_FOLLOWUP.md。
+
+验证：注册表19行21列；两新增字段枚举、fluid pumping=1.0及冲突标记通过。冻结配置SHA256保持3b928b7fa65ee90acf52fe1c968de855cddddf3c81b5a2661d9ffd134bd48e76；git diff确认src、tests和原配置无修改。本轮仅审计与记录，不运行无关求解测试。
+
+当前必须用户决定：依据此前齐鲁—胜利决定第10节，统一经济折现率8%或12%不能自行选择；两者均应透明标记MODEL_ASSUMPTION。30年不改。停止记录 source_audit/STOP_FOR_USER_DECISION_discount_rate.json；此暂停不是未使用Wei公式导致的Gate失败。正式source-backed配置、12288行数据、33代理目标、61边界V2仍未执行。
+
+## 2026-09-20 决策006：FORMAL UNIFIED DISCOUNT RATE DECISION — 8%
+
+完整授权见 docs/USER_UNIFIED_DISCOUNT_DECISION.txt。simulation.economic_discount_rate=0.08，MODEL_ASSUMPTION；所有主体、模式、commit-now、边界和代理目标统一 gamma=1/1.08。30年继续保留。决策依据为 integrated CCUS system scope consistency，不是为提高NPV。Wei12%保留REFERENCE_ONLY_CO2_EOR，Yuan10%保留REFERENCE_ONLY_COAL_CCUS；不平均、不做折现率敏感性分析。
+
+IEA2020网页检索确认8%/30年，但其具体适用段落为制氢成本比较，不能表述为所有CCUS实际融资率或全链统一寿命。继续取得原始PDF定位页码。历史 STOP_FOR_USER_DECISION_discount_rate.json 由本授权取代，保留审计轨迹；SOURCE_AUDIT仍未通过。
+
+### IEA与官方碳价入口核验结果
+
+S15：IEA2020官方PDF已下载（14417258字节，SHA256 98357d3403375b2aa2f25dc061c3fce39b03719d65d6d6f155962802435aa187）。PDF第75页/印刷第74页图2.14注释经文字及页面图像核验，明确8%与30年；其范围是不同制氢路线成本比较。两个正式参数登记MODEL_ASSUMPTION、Grade A基准，不宣称实测融资成本。
+
+上海环交所每日概况官方目录已保存。2021年目录提供历史分页；本轮2026年目录响应PublishDate为2026-08-14，未覆盖校准日。不能将该目录完整性或第三方收盘数据当作官方完整序列。尚未生成P0/mu/sigma或填补任何缺失数据。
+
+## 当前阶段核查与研究设计停止点
+
+注册表22行21列，8%、30年、Wei12%/Yuan10%参照行及枚举检查通过；旧配置哈希未变。IEA PDF页面证据已保存。
+
+新发现的映射问题详见 docs/EOR_FLOW_MAPPING_AUDIT.md：现有模型xi表示EOR与独立封存两条互斥流量的分配，不能从EOR伴生封存事实直接推出xi=.20或1。前者缺经验依据，后者会使独立封存议价/补贴通道恒零。按新规范第3/7节及用户禁止擅改模型/参数要求，暂停依赖该值的正式校准并请用户决定。折现率问题不再询问。其余来源审核尚未全部完成，任何单项决定不等于总Gate通过。
+
+## Stylized downstream CO2 routing versus EOR-associated storage
+
+用户决策007：保留xi=0.20及现有双流结构，MODEL_ASSUMPTION；完整授权见 docs/USER_DOWNSTREAM_ROUTING_DECISION.txt。其含义为 baseline routing share of captured CO2 allocated to the CO2-utilization/EOR commercial route, with the remainder allocated to a dedicated geological-storage route。20/80是本研究结构假设，不是齐鲁—胜利实测分流、物理利用效率、EOR封存率或全国统计比例。
+
+q_u是EOR路径，q_s是独立地质封存路径，实际Q=q_u+q_s。EOR-associated storage is embedded in the reduced-form abatement/value treatment and is not counted as a second physical flow。eta是reduced-form effective net-abatement proxy，统一表示捕集链残余排放及两路净减排效应；其数值仍须单独审计。
+
+storage_subsidy仅用于q_s，是独立封存政策工具；TRANSFER的storage-service bargaining也仅用于q_s。q_u仅参与CO2销售议价与EOR经济活动。JV/SOE公式保持原样，交易未匹配时实际流量仍按原逻辑处理。齐鲁—胜利仅为物理源汇、EOR路线、运输距离及EOR技术经济证据锚点。
+
+正确论文表述：A baseline routing share of 20% is assumed for the utilization/EOR pathway, while the remaining 80% is assigned to a dedicated geological-storage pathway. This split is a structural model assumption rather than an observed feature of the Qilu–Shengli project.
+
+历史STOP_FOR_USER_DECISION_utilization_fraction.json已由本授权解决，保留历史文件供追溯。该假设不导致来源Gate失败；继续其余来源审计，不改变求解器、状态、流量、议价或补贴公式。
+
+## 2026-09-20：双流决定、完整测试及新增原始证据
+
+新增tests/test_downstream_routing.py五个测试案例：三模式0.10+0.40=.50；无独立封存时EOR不触发storage支付/补贴；独立封存费用转移及补贴仅按.40计入。重点核算测试10项通过，完整pytest58项通过（8.01秒）。未改src或冻结配置，也未覆写旧formal结果。
+
+S13业主债券报告已下载并视觉核验表4.3/4.4及后页，解决先前访问限制。总投资3.4115/10.63亿元及年度能力披露保留为文献参照，不冒充匹配本模型的CAPEX。注册表现26行21列。
+
+官方碳价目录采集58页（请求均成功），发现863个唯一日报URL：2021年114，2022–2025各150，2026年149，最近2026-08-14。页数/覆盖不足以证明完整历史序列；仅保存检索目录，未填补、平滑或校准。目录和哈希见routing_followup/carbon_catalog/catalog_manifest.json。
+
+当前需要研究决定为U CAPEX资产范围及跨容量映射（详见docs/U_CAPEX_MAPPING_DECISION.md）。工程总投资不能自动按Q_bar或xi缩放，亦不代表独立封存渠道投资为零。根据新规范第3节第3项停止依赖该参数的正式实现；本停止点不是对已授权xi=.20重新提问。
+
+## 2026-09-20 决策008：综合平台与线性总能力映射（资产边界前置条件未通过）
+
+完整用户规则归档于 docs/USER_U_CAPEX_LINEAR_MAPPING_DECISION.txt。U正式含义为 Integrated downstream utilization-and-storage platform CAPEX；共享单次投资覆盖两路设施，保留一个x_U；排除捕集、已计入C的源端压缩、109 km长输干线、T运输资源成本及重复设备成本。路径OPEX分别按q_u/q_s计费，不另加storage_capex。
+
+用户已授权总能力线性映射1063×(.50/.70)=759.2857142857143 million CNY，不使用xi、q_u、q_s缩放或拆分投资，不使用规模指数。该条件成立后的正式值为MODEL_ASSUMPTION，capex_U_multiplier范围[.70,1.30]仍为DESIGN_RANGE_ASSUMPTION。各模式、动态、commit-now、代理目标和边界统一使用同一基准。
+
+**前置核验结果**：再次检查业主24页原报告，PDF16–19页/印刷14–17页。表4.3分列捕集3.4115亿元与驱油封存10.63亿元，但未明确排除109 km干线或给出资产组成。不能以项目名或捕集分列推断长输管道必定排除。也没有证据认定它一定包含管道。
+
+按本次决定第3节“如果原始报告无法判断……立即STOP_FOR_USER_DECISION”，暂不使用1063计算正式U CAPEX。第18节不再询问容量映射已遵守；当前问题仅为资产边界证据不足。注册表两个参考条目按用户指定名称与EMPIRICAL身份登记，资本条目保持REFERENCE_ONLY，未经核验不升级CAPEX_ONLY。
+
+未写入759.2857142857143正式配置，未启动依赖该资本值的校准模块或八项测试；这些应在前置条件解决后实施，不能通过代码测试声称资产边界已经得到原文证明。已有58项测试结果仍为上一阶段验证，未重跑无关测试。
+
+## 2026-09-20 决策009：PIPELINE_EXCLUDED，U CAPEX停止点解除
+
+用户已完成资产边界专项核查，完整原文归档 docs/USER_PIPELINE_EXCLUDED_DECISION.txt。正式接受PIPELINE_EXCLUDED，资产边界证据等级A；不再就1063是否包含干线询问。年度报告投资/能力为本地独立核验，审批号、招标及槽车时间线为用户核查提供，未冒称本轮独立下载验证。
+
+1063 million CNY与.70 Mt/year为经验工程参照；正式综合平台CAPEX=1063×(.50/.70)=759.2857142857143 million CNY，MODEL_ASSUMPTION。xi不参与换算，管道不再次扣减或另行加资本支出，1.70 Mt/year运输能力不用于U缩放。历史8.1亿元仅EARLY_PROJECT_INVESTMENT_ESTIMATE_REFERENCE_ONLY。
+
+资产判定文件：config/U_CAPEX_ASSET_BOUNDARY_DECISION.json。正式已批准数值写入config/source_backed_approved_inputs.json（批准输入集合，非可运行最终配置）；其他来源尚未通过，不以旧值填满新配置。换算函数src/eor_cost_calibration.py仅实现已授权线性公式，不复刻未确认Wei方程，未改动态求解器。
+
+旧U CAPEX STOP文件保留历史，现由本决定解除。后续所有模式、commit-now、代理和V2边界必须使用同一CAPEX基准；完整执行仍待剩余来源Gate通过。
+
+
+## 2026-09-20：U CAPEX实现验证、运输原文闭环及后续审计
+
+完整pytest已由此前58项扩为78项并全部通过（2.58秒）：U CAPEX新增17项，运输资源成本核算新增3项。此前新增CAPEX测试曾因Windows默认编码读JSON失败，显式UTF-8后完整75项通过；随后新增运输测试的最新完整结果为78项。测试在隔离配置下验证已批准值，不代表尚未完成的source-backed正式运行。三模式资本支付、乘数、xi独立性、不可逆单次投资、运输/封存成本独立性以及内部运输支付抵消均通过。
+
+冻结model_config.game.json SHA256仍为3b928b7fa65ee90acf52fe1c968de855cddddf3c81b5a2661d9ffd134bd48e76。对照results/resume_before_1d8388dd.json，旧formal的257个文件逐一哈希一致。未改动态求解器；验证摘要见post_u_capex/validation.json。
+
+S03出版商HTML原文表2确认：设备0.2163、维护0.0319、电力0.0102，合计0.2584 CNY/(tCO2 km)，因此cost_boundary=LEVELIZED_CAPEX_PLUS_OPEX。原情景为20年、8%、2022价格、250km和60万吨/年。按既有用户授权登记0.2584×109=28.1656 CNY/tCO2，DERIVED_FROM_EMPIRICAL；这是有情景条件的文献成本基准，不是实测纯OPEX或统一收费。源模型压缩站及电力已计入；最终捕集压缩资产仍需核对重叠。没有额外新增T资本支出，125仍为内部支付MODEL_ASSUMPTION。注册表现31行21列，已批准输入集合更新，完整正式配置仍未生成。
+
+S08 Li2022第4节及表2–7、S09 Miao2025第3节及表1–3已从出版商HTML读取并保存原文摘录；未宣称取得PDF。Li规划15年新捕集10.68 Mt、增量油2.97 Mt，油量/CO2分母及固定费、回收再注入量必须统一；旧780及94.1654不沿用。Miao净减排核算不包含采出油后续燃烧，不把其CROI或净减排总量自动写成eta。
+
+S01正确书目链接https://academic.oup.com/ce/article/9/4/15/8071291已确认，浏览器仍连接超时，不能声称核实450 million CNY。官方行情查询页https://shyx.cneeex.com/qdata.html?1785740461457可读，2026-09-18综合价格行情收盘95.63元/吨；该单日快照已存档。历史目录至8月14日不代表数据终点，未把不完整目录校准成GBM，也未自动拼接不同价格定义。
+
+新研究停止点：EOR固定O&M及年际变化如何跨容量映射到本模型恒定成本参数。详见docs/EOR_OPERATING_COST_MAPPING_DECISION.md；依据新规范第3节第3/8项，不擅自将固定费吨均化或缩放。建议生命周期累计EOR运营费用/累计新CO2映射，须用户审定其成本发生方式。PIPELINE_EXCLUDED及U CAPEX无需重新决定。来源Gate未通过，正式12288行、33代理目标和61项V2尚未启动。
+
+
+## 2026-09-20 决策010：EOR两部制生命周期映射
+
+用户原文归档docs/USER_EOR_TWO_PART_OPEX_DECISION.txt。全成本吨均化提案明确不采用；历史STOP_FOR_USER_DECISION_eor_opex_mapping.json已由本授权解决。固定EOR年费按基准fresh支路能力缩放，并在x_U=1后每年发生，包括q_u=0；只有变动费生命周期吨均化后乘q_u。基准缩放冻结后xi变化不自动改固定费。总U固定费仍待独立封存/共享成本审计，不提前填零。
+
+新增docs/EOR_OPEX_COMPONENT_CROSSWALK.md和source_audit/eor_opex_component_crosswalk.csv（24行，12必需字段）。Li2022为主；Miao重复组件不相加。式3已核实资本、固定运营、变动运营和税分列。10.68Mt可作为累计fresh分母，平均0.712Mt/年，对0.10Mt/年模型基准的缩放因子0.1404494382022472。费用仍缺完整井设施计费基数及2019美元到人民币的来源核验；不套用Miao三项条件合计，不使用当前汇率或通胀升级。
+
+src/eor_cost_calibration.py实现独立两部制函数；新增19测试覆盖成本发生、零流量负担、xi冻结、回收只入成本、资本/其他路径排除及Li/Miao去重。完整pytest97 passed in2.48s。所有合成测试值仅为验证，不进入正式参数。新增6条Li文献模型输入注册记录，当前37行21列；正式EOR fixed component和unit cost仍不填猜测值。
+
+新停止点为Fig5年度原始数值可得性：出版商图像已视觉核对，15年四条曲线双轴无逐点标签；表格引用图5，数据声明Data will be made available on request。文字累计油吨数不能直接替代逐年桶数。图像数字化需要承认估读误差并获得研究授权；没有擅自估点、调整曲线满足合计或联系作者。详见STOP_FOR_USER_DECISION_eor_annual_data.json。两部制规则和U CAPEX均不再询问，GATE_SOURCE_AUDIT未通过，正式12288行未启动。
+
+
+## 2026-09-20 决策011：最小必要图像数字化
+
+授权归档docs/USER_LI_FIG5_DIGITIZATION_DECISION.txt。纠正先前“必须完整15年路径”的前提：线性变动费只依赖累计F/R/B；F=10.68Mt来自正文，fixed缩放不依赖图形。出版商高分辨率原JPEG已下载1712×954/278131bytes，并记录SHA256、日期和URL。
+
+完成右轴15个油产量marker坐标、逐点上下界及累计值，约20.8million bbl；不采用无来源桶吨换算、不向2.97Mt强制校正。回收曲线第11年完全被绿色marker遮挡，替代注入曲线第5年也遮挡中心，未推断隐藏点或插值。触发本次决定第22节C/E，新STOP仅为遮挡点处置，不重新询问数字化授权。
+
+输出位于source_audit/li_fig5_digitization/，包括原图、metadata、points、uncertainty、totals及LI_FIG5_DIGITIZATION_AUDIT.md。R_total/正式费用尚未生成；新增轴转换和累计费用函数及9项测试，完整106项通过（2.20秒）。两部制固定费用仍需井设施基数/货币口径等来源审计，总SOURCE_AUDIT_GATE未通过，12288行未启动。
+
+
+## 2026-09-20 决策012：固定4:1 EOR收益映射
+
+归档docs/USER_EOR_FIXED_RATIO_DECISION.txt；正式ratio=4.0 t fresh CO2/t incremental oil，MODEL_ASSUMPTION。新校准函数实现Q_oil=q_u/4及P_o=P_oil(CNY/t-oil)/4。现有求解器q_u为Mt/年，吨制接口显式×1e6，基准25,000t-oil/年；B_u=P_o-c_u公式不变。已批准输入集合增加ratio，未填未经审计的正式油价或P_o。
+
+Fig5油曲线/正文2.97Mt退出正式收益校准，旧文件不删除；新classification.json单独记录用途变化。两部制成本不变，R_total仍进入回收和再注入电耗，不设0、不以4:1消去。剩余遮挡停止点按本次第12节改为EOR_OPEX_DATA_GAP，收益图像依赖已解除。详见docs/EOR_FIXED_RATIO_REVENUE_AUDIT.md及STOP_FOR_USER_DECISION_eor_opex_data_gap.json。
+
+新增9项收益测试，完整115项通过（7.60秒）。原Outcome包含NaN导致初始相等断言失败，修复测试比较方式后通过；没有求解器改动。原formal257文件及冻结config哈希复核一致。Source audit仍未通过，12288行未启动。
+
+
+## 2026-09-20 决策013：固定回收比rho_R=1.0
+
+归档docs/USER_EOR_RECYCLE_RATIO_DECISION.txt；fixed lifecycle-average回收比1.0为MODEL_ASSUMPTION，写入approved inputs。R=q_u、I=2q_u仅内部处理工作量，不增交易/碳收益/外运/产油，4:1收益不变。所有LiCO2精细数字化终止，历史文件保留并由新classification标为REFERENCE_ONLY_NOT_USED_IN_FORMAL_RECYCLE_CALIBRATION。原Fig5回收点OPEX数据停止解除。
+
+MIT原报告PDF及Abuov2022全文XML已下载/核验：MIT PDF41/印刷37节3.4.4参照1.1，Abuov gross15.77/net7.96/recycle7.81，均只为文献支持，不改正式1.0。20.4+38=58.4kWh/t fresh，×0.085=4.964USD/t为CO2电费分量，不是完整OPEX。国家统计局2019汇率6.8985检索核验，未做价格年通胀升级。
+
+新增11案例，完整126项通过（2.57秒），旧formal257文件及冻结config哈希一致。动态求解器未修改。
+
+新停止项：Li表4/5的新井、逐井维护费的资本基数不明确，不能自动采用Miao整项资本百分比合计。条件整项计算10.9536million USD/year尚未采用；详见docs/EOR_RECYCLE_RATIO_AUDIT.md。需审定是否允许整项资本代理基数。Source audit未通过，完整正式费用/12288行未启动。
+
+
+## 2026-09-21 决策014：正式 EOR 简化成本（覆盖此前两部制映射）
+
+正式 c_u=15×6.8974=103.461 CNY/t fresh CO2，MODEL_ASSUMPTION、A-，以 Guo et al. (2020), DOI 10.1016/j.petrol.2019.106720 的 O&M benchmark 为依据。国家统计局2020统计公报已独立核实汇率6.8974；Guo表1的15目前来自用户明确决定，独立表格核验继续。该来源的注入量口径迁移到本模型 fresh CO2 分母属于明确的模型假设，不是齐鲁观测。
+
+EOR-specific fixed OPEX=0；Li/Miao逐井维护费、10.9536 million USD/year和4.964 USD/t电费均不叠加。rho=1仅保留技术工作量解释，4:1收益不变。q_u为Mt时，q_u×103.461直接得到million CNY。共享U CAPEX、运输和q_s储存成本独立计费；EOR固定分量为0不代表未经审计的其他平台费用已被确定。
+
+Li/Miao组件表及历史工具保留为REFERENCE_ONLY_NOT_USED_IN_FORMAL_EOR_OPEX。解除EOR_FIXED_MAINTENANCE_BASE及相关井资本基数/固定费聚合停止项。今后标量来源优先直接代表值，不为设备级拆分停工；仅按本次用户决定第15节A–D及原规范Gate失败规则停下询问。SOURCE_AUDIT仍在进行，未冻结正式配置或启动12288行。
+
+决策014验证：完整137项测试通过（8.37秒）；原formal257文件及冻结配置哈希不变。NBS2020汇率已核验，Guo原文HTTP403/浏览器读取超时，15 USD/t表格独立核验状态诚实保留待完成，不重新询问用户已批准的标量选择。
+
+继续审计发现：泰州政府2025-12-07正式报道总投资3.85亿元，形成385 million CNY捕集项目资本候选，尚未写入正式输入；不是沿用未经核实的450。Carbon Neutrality原文明确240为建设期预期运营成本，可作为标量OPEX benchmark，不能称已实现实测成本。待核验项仍含油价、净减排比例、储存成本口径和完整官方碳价序列。证据及验证结果见source_audit/eor_reduced_form/。
+
+
+## 2026-09-21 Guo原文独立核验完成及归因更正
+
+出版商全文表1确认h=15 USD/tCO2，式2.9支持源端新鲜捕集量对应注入量，脚注7说明CO2回收费用包含在EOR运营费中。式2.7另列固定F，式2.8因其在原文运营优化中恒定而删除。当前模型存在投资进入决策，不能以该代数处理证明固定费为零。严格保留用户批准的103.461及EOR fixed=0，但后者明确标记为用户简化假设，不声称所有固定费被原文h覆盖。此前原文访问阻塞已解除；没有更改算法或增加工程拆分。证据：source_audit/eor_reduced_form/guo_original_verification.md。
+
+
+## 2026-09-21 剩余标量校准推进
+
+按最新简化原则与原规范第9/10节，将capture OPEX=240（MODEL_ASSUMPTION；Carbon Neutrality节3.2.4建设期预期运营成本）及eta=0.70（DERIVED_FROM_EMPIRICAL；Dong等JCP2025 DOI10.1016/j.jclepro.2024.144557出版商highlight约30%衍生排放抵消）加入已批准输入。eta仅reduced-form代理，不是ETS核证比例。Crossref确认卷486/144557；不是误用捕集率。两项均无需工程重建。未采用208总成本叠加。官方碳价分页缺口已定位：第10页以后跳到www.cneeex.com/zcms/ui/catalog/...动态页面，原先只抓静态目录不能说明完整性。
+
+
+## 2026-09-21 NETL捕集资本原件核验
+
+已下载并逐页定位NETL托管Tao2023报告，第9页图像核验右侧泰州50万吨/年Investment RMB385Million。正式已批准输入增加C CAPEX=385 million CNY，EMPIRICAL/A；同容量，无外推。同页总成本约30USD/t仅参考，不叠加240运营成本。PDF哈希及图像保存在scalar_followup/netl_verification.json、netl_page9.png。原冻结配置未修改。
+
+官方COMCEA逐日接口恢复下载，已落盘响应复用。部分code401对应法定休市日，须与官方holiday表逐项核对，不能将其直接当网络失败或缺失交易日。完整性审计尚未完成，未校准GBM或启动正式数据集。
+
+
+## 2026-09-21 注入成本标量与GBM实现
+
+按规范第13节及最新标量校准原则，Engineering2024原文other CCUS注入成本50–60取中点55CNY/t，进入q_s流量成本。55仅injection-cost proxy，不宣称全国full-chain成本；原文未分资本/运营，registry的OPEX_ONLY明确为本模型会计归属，不是文献已证明的工程拆分。不另造storage CAPEX或资本回收费。
+
+新增src/carbon_calibration.py按日历时间实现指定GBM公式，无平滑、裁剪或补价。新增7项公式/输入测试，完整144项通过（9.90s）。完整性审计工具在逐日下载未齐时拒绝导出校准。当前INCOMPLETE是采集过程状态，不是已提交正式Gate失败；正式GBM尚未生成。
+
+
+## 2026-09-21 正式油价单位闭环
+
+依据用户最新标量来源优先级，Wei2015中国陆上EOR的90USD/bbl代表值优先于另选单一年份业主实测价格。中国石化2020 SEC原始披露CONVERSION段确认国产原油7.1bbl/t（非炼油7.35）；NBS2020FX6.8974，得到4407.43860CNY/t-oil，除用户固定4得到1101.85965CNY/t fresh CO2。整个跨年份代表值映射标MODEL_ASSUMPTION，不声称统一实测价格年，不做未授权通胀升级，不是当前市场价。1902为2020部门实现价格，2029为外部销售价格，口径不同且受疫情价格下跌影响，仅参考。正式收益不依赖Fig5。证据哈希见scalar_followup/oil_revenue_verification.json。
+
+
+## 2026-09-21 GATE_SOURCE_AUDIT PASS
+
+官方1257条收盘价覆盖2021-07-16至2026-09-18，1351个工作日请求中的94日由官方休市表解释；2025-10-13 API缺项用同交易所公告原值57.15补齐来源，不插值。未解决日期0。P0=95.63，mu=0.16886265073995846，sigma=0.3106155387941257，CSV SHA256=a5e60f21e0c065a4c3ef361274c7dfbc8a8d1664ee133cad979286462494000e。三个规定校准产物已生成。来源Gate PASS，新增model_config.source_backed.json，原game配置及formal257文件不动。下一阶段仍须新增COMMIT_NOW、同步诊断、BoundaryV2代码/测试和正式代码冻结；12288行未启动，不声称全流程完成。
+
+
+## 2026-09-21 source-profile实现预检STOP
+
+新增COMMIT_NOW、同步前向统计、1001点exact BoundaryV2函数及测试；默认配置159passed（2.50s），新source配置相关19passed（0.83s）。尚未完成主入口/正式代码冻结。
+
+TRANSFER在carbon_scale=6.25触发STATIC_ACCOUNTING_FAILURE=2.3283064365386963e-10>1e-10。误差恰为当前利润规模的1ULP；只读诊断math.fsum两边均1708392.8310323984、差0。尚未修改浮点实现或阈值，按用户Gate失败停止规则暂停后续流程，请用户决定是否只修复静态会计求和。详见SOURCE_PROFILE_PREFLIGHT_STOP.md和source_audit/static_accounting_endpoint_failure.json。正式12288行、33代理与61V2搜索未执行。
+
+
+## 2026-09-22 授权fsum最小修复及再次预检
+
+经济静态账相关多项求和改math.fsum，保留所有项及符号、乘法/议价/均衡/动态算法、参数、域和严格1e-10阈值。两个回归覆盖原聚合案例及主体利润求和案例；完整161passed（2.32s），source相关21passed（0.74s）。基准、下端点三模式均通过；TRANSFER上端点通过，max static error7.275957614183426e-12。
+
+JV上端点仍FAIL：pool与application分别舍入再fsum为1708392.8310323982，直接资源账fsum为1708392.8310323984，差2.3283064365386963e-10。不同于原案例，已用fsum仍非0，未按授权条件豁免。已停止，待确认是否允许进一步处理JV中间金额舍入；正式12288行、代理、BoundaryV2未启动。详情FSUM_REPAIR_PREFLIGHT_STOP_20260922.md及source_audit/fsum_full_preflight_20260922.json。
+
+
+## 2026-09-22 用户批准静态会计100元绝对误差预算
+
+用户明确“不超过100元忽略”。source-backed静态会计预算统一为error<=100/1e6=0.0001million CNY，阶段计算和dataset完整性验证共用同一函数。保留math.fsum及实际误差，不修改利润、参数、设计域、动态/概率/代理阈值。method-validation仍严格<1e-10。新增99/100/超过100元及非有限值/负值测试。
+
+完整170项通过（2.30s）；source基准与carbon_scale上下端点共9案例全部通过，含dataset.validate_rows。最大静态差额0.00023283064365386963元，未清零；最大动态误差1.4551915228366852e-11，仍满足原1e-8。source相关30项通过。此前静态Gate STOP由本决策解除，正式12288行尚未启动，仍需完成主入口及代码冻结等规定步骤。
+
+
+## 2026-09-22 正式入口完成，准备冻结
+
+新增run_source_backed_protocol.py，来源/官方序列重算验证、独立source配置、COMMIT_NOW9个目标、同步诊断、exact数据、33代理目标、61项1001点exact边界及哈希resume串联完成。172tests通过（2.52s），compileall通过。正式代理保持既定HGB和划分/阈值；commit-now使用价值类0.98/0.05门槛。新增边界与同步定义文档；阶段动作概率质量为30年累计量，不误称路径概率。原formal及全部来源原件保留本地，生成产物由哈希manifest审计，不上传。下一步本地Git冻结后启动正式入口。

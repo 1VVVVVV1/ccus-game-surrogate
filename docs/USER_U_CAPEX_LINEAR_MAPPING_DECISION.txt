@@ -1,0 +1,557 @@
+用户决定：U 端 CAPEX 采用“综合下游处理平台 + 线性总处理能力映射”。
+
+==================================================
+1. U端资产范围固定
+==================================================
+
+模型中的：
+
+utilization_storage.capex_initial
+
+正式定义为：
+
+“U 运营商建设一套可同时支撑
+CO2-EOR利用路径
+和
+独立地质封存路径
+的综合下游处理平台的一次性资本支出。”
+
+英文固定：
+
+Integrated downstream utilization-and-storage platform CAPEX
+
+它包括原则上属于 U 端的：
+
+- sink-side CO2 receiving facilities
+- EOR injection facilities
+- dedicated storage injection facilities
+- field-side compression / boosting where applicable
+- injection wells / well conversion where applicable
+- monitoring and field facilities
+- utilization/storage-side shared infrastructure
+
+但明确排除：
+
+- C端捕集设施
+- source-side capture compression already counted in C
+- 109 km inter-site trunk pipeline transport infrastructure
+- T模块已经计入的运输资源成本
+- 已经按per-ton OPEX计算的重复设备成本
+- oil production revenue itself
+
+==================================================
+2. 10.63亿元的正式身份
+==================================================
+
+已核验业主来源：
+
+Qilu–Shengli CO2-EOR / storage demonstration project
+
+reported total investment:
+
+10.63亿元
+=
+1063 million CNY
+
+先登记：
+
+literature.qilu_shengli.eor_storage_project_capex
+=
+1063 million CNY
+
+status:
+EMPIRICAL
+
+但这个值是：
+
+REFERENCE_PROJECT_CAPEX
+
+不是直接的：
+
+utilization_storage.capex_initial
+
+==================================================
+3. 资产边界必须先核对
+==================================================
+
+在正式使用1063之前，必须再次核验业主报告中：
+
+10.63亿元
+
+是否属于：
+
+驱油与封存工程本身
+
+而不包含：
+
+- 齐鲁石化捕集工程
+- 109 km长输干线
+- 已被T模块独立建模的运输资产
+
+如果原始报告明确排除了上述资产：
+
+继续执行下面的容量映射。
+
+如果原始报告无法判断，
+或明确包含长输管道/捕集工程且无法拆分：
+
+立即：
+
+STOP_FOR_USER_DECISION
+
+不得直接使用1063。
+
+==================================================
+4. 容量基准
+==================================================
+
+业主报告已核验：
+
+reference downstream annual storage/handling capability
+=
+0.70 MtCO2/year
+
+登记：
+
+literature.qilu_shengli.reference_capacity
+=
+0.70 MtCO2/year
+
+status:
+EMPIRICAL
+
+注意：
+
+不得使用：
+
+xi = 0.20
+
+参与CAPEX缩放。
+
+不得使用：
+
+q_u = 0.10
+
+单独缩放整个U投资。
+
+不得使用：
+
+q_s = 0.40
+
+单独缩放整个U投资。
+
+因为当前：
+
+U capex_initial
+
+是一笔同时建设两条下游路径能力的共享投资。
+
+==================================================
+5. 模型目标能力
+==================================================
+
+模型总下游处理能力：
+
+Q_bar
+=
+0.50 MtCO2/year
+
+因此：
+
+Q_U_model
+=
+0.50 MtCO2/year
+
+不是：
+
+0.10
+
+也不是：
+
+0.40
+
+==================================================
+6. 跨容量缩放规则
+==================================================
+
+由于当前没有经过来源核验的：
+
+economies-of-scale exponent
+
+禁止自行使用：
+
+0.6
+0.67
+0.7
+或其他指数。
+
+正式采用最透明的：
+
+linear capacity scaling
+
+即：
+
+I_U_model
+=
+I_U_reference
+×
+(Q_U_model / Q_U_reference)
+
+因此：
+
+I_U_model
+=
+1063
+×
+(0.50 / 0.70)
+
+=
+759.2857142857143 million CNY
+
+正式config使用：
+
+utilization_storage.capex_initial
+=
+759.2857142857143
+
+不要自行四舍五入到：
+
+759
+760
+或
+7.6亿元。
+
+==================================================
+7. 最终U CAPEX的证据分类
+==================================================
+
+注意：
+
+759.2857142857143
+
+不能标成纯EMPIRICAL。
+
+建议 registry：
+
+parameter_key:
+utilization_storage.capex_initial
+
+formal_value:
+759.2857142857143
+
+unit:
+million CNY
+
+status:
+MODEL_ASSUMPTION
+
+source:
+Qilu–Shengli owner-reported project investment
+
+transformation:
+1063 × (0.50 / 0.70)
+
+transformation_formula:
+I_U = I_ref × Q_model / Q_ref
+
+paper_use:
+SOURCE_BACKED_BASELINE_WITH_EXPLICIT_LINEAR_SCALING
+
+uncertainty_note:
+"The 1063 million CNY reference investment is empirical.
+Its linear rescaling from 0.70 to 0.50 MtCO2/year is an
+explicit modeling assumption because no validated
+capacity-scaling exponent is imposed."
+
+同时保留：
+
+1063 million CNY
+和
+0.70 Mt/year
+
+为独立EMPIRICAL registry rows。
+
+==================================================
+8. 不按20/80拆CAPEX
+==================================================
+
+明确禁止：
+
+EOR CAPEX
+=
+0.2 × total CAPEX
+
+storage CAPEX
+=
+0.8 × total CAPEX
+
+因为：
+
+xi=0.20
+
+是CO2 routing share，
+
+不是资本资产份额。
+
+流量份额不能自动等于投资份额。
+
+==================================================
+9. 不新增第二个U投资状态
+==================================================
+
+不要把现有模型改成：
+
+U_EOR
+U_storage
+
+两个独立投资主体或两个built states。
+
+继续保持：
+
+x_U ∈ {0,1}
+
+一次 U 投资：
+
+同时建设综合下游平台。
+
+这样保持当前已经验证的双主体动态博弈结构。
+
+==================================================
+10. q_u / q_s 的成本归属
+==================================================
+
+CAPEX：
+
+一次性共同平台CAPEX：
+
+I_U * d_U
+
+OPEX：
+
+继续按路径分别计：
+
+utilization OPEX
+=
+c_u * q_u
+
+dedicated storage OPEX
+=
+c_s * q_s
+
+因此：
+
+共享CAPEX
++
+route-specific variable OPEX
+
+是正式结构。
+
+==================================================
+11. 独立封存CAPEX如何理解
+==================================================
+
+不要另外再增加：
+
+storage_capex
+
+因为当前 U capex_initial 已定义为：
+
+integrated downstream utilization-and-storage platform CAPEX。
+
+即：
+
+dedicated storage route所需的资本资产
+被视为该综合平台投资的一部分。
+
+因此不能再把：
+
+55 CNY/t injection-cost proxy
+
+中的资本部分额外加成CAPEX。
+
+55 CNY/t 只有在成本边界确认不会与CAPEX重复后，
+才可以作为storage operating-cost proxy使用。
+
+==================================================
+12. 防止双重计费
+==================================================
+
+必须审计所有U端成本项：
+
+如果某项成本属于：
+
+LEVELIZED_CAPEX_PLUS_OPEX
+
+则不能同时进入：
+
+capex_initial
+和
+variable_opex_per_ton。
+
+必须在registry中标记：
+
+cost_boundary
+
+==================================================
+13. capex multiplier保持
+==================================================
+
+scenario中的：
+
+capex_U_multiplier ∈ [0.70,1.30]
+
+继续作用于：
+
+759.2857142857143
+
+即：
+
+effective_U_CAPEX
+=
+759.2857142857143
+×
+capex_U_multiplier
+
+该区间仍为：
+
+DESIGN_RANGE_ASSUMPTION
+
+不是 empirical confidence interval。
+
+==================================================
+14. commit-now和动态投资都统一使用
+==================================================
+
+以下全部必须使用同一个U基准CAPEX：
+
+dynamic game
+commit-now
+TRANSFER
+JOINT_VENTURE
+STATE_OWNED
+surrogate targets
+boundary V2
+
+不得不同模式使用不同U CAPEX。
+
+==================================================
+15. 新增测试
+==================================================
+
+至少增加：
+
+Test 1:
+reference CAPEX = 1063
+reference capacity = .70
+model capacity = .50
+
+result:
+759.2857142857143
+
+Test 2:
+changing xi from .20 to .30
+must NOT change U CAPEX
+
+Test 3:
+q_u/q_s split changes
+must NOT change U CAPEX payment
+
+Test 4:
+capex_U_multiplier=1
+CAPEX exactly equals baseline.
+
+Test 5:
+capex_U_multiplier=.7 / 1.3
+correct scaling.
+
+Test 6:
+U invests once only;
+CAPEX paid once.
+
+Test 7:
+storage OPEX is not added to U CAPEX.
+
+Test 8:
+transport pipeline cost is not included in U CAPEX.
+
+==================================================
+16. 文稿表述固定
+==================================================
+
+正确写法：
+
+"The downstream operator CAPEX is anchored to the
+owner-reported investment of the Qilu–Shengli EOR-storage
+demonstration project. Because the model represents a
+0.50 MtCO2/year integrated utilization-and-storage platform
+while the reference project reports a 0.70 MtCO2/year
+capacity, the reference investment is linearly capacity-scaled.
+The scaling rule is treated as a transparent modeling
+assumption rather than an empirical law."
+
+禁止写：
+
+"U CAPEX is empirically observed as 759.29 million CNY."
+
+因为：
+
+1063是经验值，
+
+759.2857是：
+
+经验锚点
++
+模型缩放假设。
+
+==================================================
+17. 如果1063包含长输管道怎么办
+==================================================
+
+如果进一步核验发现：
+
+10.63亿元
+
+包含109 km长输管道投资，
+
+则不能继续使用上述759.2857。
+
+必须先：
+
+STOP_FOR_USER_DECISION
+
+因为T模块已经独立承担运输经济。
+
+不得重复计入。
+
+==================================================
+18. 继续来源审计
+==================================================
+
+这个规则一旦完成资产边界核验后，
+U CAPEX问题即解决。
+
+继续审核：
+
+- official carbon price series
+- capture CAPEX
+- capture OPEX
+- EOR revenue
+- EOR operating cost
+- effective abatement
+- transport real cost
+
+不要再因为：
+
+0.70 → 0.50
+
+的容量映射询问用户。
+
+线性缩放已经授权。
+
+只有：
+
+1063亿元资产边界确认包含
+capture / trunk pipeline
+且无法拆分时，
+
+才再次 STOP_FOR_USER_DECISION。

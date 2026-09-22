@@ -8,3 +8,8 @@ results/formal/surrogate/models/
 results/source_backed_formal/exact_dataset/chunks/
 results/source_backed_formal/surrogate/models/
 results/archive/
+.pytest_tmp_reduced_form/
+# Raw evidence and generated numerical artifacts are retained locally with manifests.
+results/source_backed_formal/
+results/formal/
+results/resume_before_1d8388dd.json

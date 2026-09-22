@@ -1,0 +1,473 @@
+用户决定：停止继续对 Li et al. Fig.5 的 CO2 回收/注入曲线做精细数字化。
+
+EOR回收CO2采用文献支持的固定生命周期平均回收比：
+
+eor_recycle_ratio = 1.0
+
+定义：
+
+rho_R
+=
+recycled_CO2 / fresh_CO2
+=
+1.0
+
+status:
+MODEL_ASSUMPTION
+
+==================================================
+1. 正式物理映射
+==================================================
+
+对于本模型EOR路径：
+
+F = q_u
+
+其中F为fresh / externally supplied CO2。
+
+固定：
+
+R = rho_R * F
+
+rho_R = 1.0
+
+因此：
+
+R = q_u
+
+total injected CO2:
+
+I_total
+=
+F + R
+=
+2 * q_u
+
+==================================================
+2. 文献依据
+==================================================
+
+该值不是齐鲁—胜利实测比例。
+
+它是一个用于stationary reduced-form economic model的
+lifecycle-average modeling assumption。
+
+文献支持：
+
+A.
+MIT, The Economics of CO2 Storage (2003)
+
+其EOR概念设计直接采用：
+
+average CO2 recycle ratio = 1.1
+
+用于计算CO2 recycle plant的电力需求。
+
+文献同时承认实际recycle ratio会随EOR项目生命周期变化。
+
+B.
+Azzolina等真实CO2-EOR项目数据，
+后续发表于International Journal of Greenhouse Gas Control的模型指出：
+
+约50%的total injected CO2
+会被采出、分离并回收再注入。
+
+在约50% retention下：
+
+recycle rate
+approximately equals
+net/purchased CO2 utilization rate。
+
+即生命周期平均：
+
+R/F ≈ 1。
+
+C.
+2022 Environmental Science & Technology
+Techno-Economic Assessment and Life Cycle Assessment of CO2-EOR
+
+报告：
+
+gross CO2 utilization = 15.77 mscf/bbl
+net/fresh utilization = 7.96 mscf/bbl
+recycle = 7.81 mscf/bbl
+
+因此：
+
+7.81 / 7.96
+=
+0.9812
+
+接近1。
+
+因此本研究采用：
+
+rho_R = 1.0
+
+作为简化的中心假设。
+
+==================================================
+3. 不再使用Fig.5确定R_total
+==================================================
+
+停止：
+
+- year-11 recycled marker几何重建；
+- year-5 injection marker几何重建；
+- 插值；
+- 曲线平滑；
+- hidden-marker estimation。
+
+已有：
+
+Fig.5原图
+局部放大
+oil digitization
+pixel uncertainty
+metadata
+
+全部保留作为审计历史。
+
+但：
+
+Fig.5 CO2 annual curves
+不再进入正式EOR OPEX校准。
+
+标记：
+
+REFERENCE_ONLY_NOT_USED_IN_FORMAL_RECYCLE_CALIBRATION
+
+==================================================
+4. 原EOR_OPEX_DATA_GAP解除
+==================================================
+
+不再需要：
+
+R_total from Fig.5。
+
+正式运行时：
+
+R = q_u
+
+即可。
+
+因此历史：
+
+EOR_OPEX_DATA_GAP
+
+因缺少Fig.5回收点造成的停止状态解除。
+
+==================================================
+5. CO2注入电耗
+==================================================
+
+Li的注入电耗：
+
+10.2 kWh / t total injected CO2
+
+因此每1 t fresh CO2：
+
+total injection
+=
+1 + rho_R
+=
+2 t
+
+所以：
+
+injection electricity
+=
+10.2 * 2
+
+=
+20.4 kWh / t fresh CO2
+
+==================================================
+6. CO2回收电耗
+==================================================
+
+Li的recycling electricity：
+
+38 kWh / t recycled CO2
+
+rho_R = 1
+
+所以每1 t fresh CO2：
+
+recycling electricity
+=
+38 * 1
+
+=
+38 kWh / t fresh CO2
+
+==================================================
+7. CO2处理部分合计
+==================================================
+
+因此：
+
+CO2 injection + recycling electricity
+
+=
+20.4 + 38
+
+=
+58.4 kWh / t fresh CO2
+
+Li 2019 electricity price：
+
+0.085 USD/kWh
+
+则该部分：
+
+58.4 * 0.085
+
+=
+4.964 USD / t fresh CO2
+
+注意：
+
+4.964 USD/t
+
+只代表：
+
+CO2 injection electricity
++
+CO2 recycle electricity
+
+不得称为完整EOR variable OPEX。
+
+它不包括：
+
+oil-production O&M
+oil-production electricity
+fixed OPEX
+CAPEX
+CO2 purchase
+capture
+109 km transport
+dedicated storage
+
+==================================================
+8. 与4:1换油率结合
+==================================================
+
+已经批准：
+
+4 tCO2 fresh / 1 t incremental oil
+
+保持：
+
+Q_oil
+=
+q_u / 4
+
+这一规则只决定：
+
+oil production
+和
+EOR revenue。
+
+不要把4:1换油率与1:1回收率混淆。
+
+两个独立假设为：
+
+oil conversion:
+4 t fresh CO2 / t oil
+
+CO2 recycle:
+1 t recycled CO2 / t fresh CO2
+
+==================================================
+9. 回收CO2不能重复计算物理流量
+==================================================
+
+模型中的：
+
+q_u
+
+始终只表示fresh CO2进入EOR商业路径。
+
+因此：
+
+physical external CO2 flow
+=
+q_u
+
+不是：
+
+2*q_u。
+
+2*q_u只用于：
+
+EOR内部总注入处理工作量。
+
+recycled CO2：
+
+不得重新进入：
+
+CO2交易量
+carbon credit quantity
+transport volume
+Nash bargaining quantity
+q_u
+Q
+
+==================================================
+10. 收益不因回收而增加
+==================================================
+
+EOR revenue仍为：
+
+R_EOR
+=
+(q_u / 4) * P_oil
+
+不能改成：
+
+(2*q_u / 4) * P_oil
+
+回收CO2只产生内部处理成本，
+不创造第二份fresh CO2收益。
+
+==================================================
+11. 碳收益不重复
+==================================================
+
+carbon-credit quantity仍基于原模型：
+
+fresh captured/handled CO2
+
+不得因为：
+
+R=q_u
+
+而把碳减排量翻倍。
+
+recycled CO2属于EOR内部循环流，
+不是新增捕集CO2。
+
+==================================================
+12. registry
+==================================================
+
+新增：
+
+parameter_key:
+utilization_storage.eor_recycle_ratio
+
+formal_value:
+1.0
+
+unit:
+t recycled CO2 / t fresh CO2
+
+status:
+MODEL_ASSUMPTION
+
+paper_use:
+FORMAL_EOR_OPEX_REDUCED_FORM
+
+uncertainty_note:
+"A lifecycle-average recycle ratio of 1.0 is imposed for the
+stationary economic model. Literature benchmarks are close
+to unity, while actual recycle rates vary over the life of an
+EOR project."
+
+==================================================
+13. 不做额外敏感性分析
+==================================================
+
+不要自动加入：
+
+rho=0.98
+rho=1.1
+rho随时间变化
+
+等实验。
+
+0.981和1.1只作为literature cross-reference。
+
+正式模型固定：
+
+rho_R = 1.0。
+
+==================================================
+14. tests
+==================================================
+
+增加至少：
+
+Test 1:
+q_u=1 t
+→ recycled=1 t
+
+Test 2:
+q_u=1 t
+→ total injection=2 t
+
+Test 3:
+q_u=0
+→ recycled=0
+→ injection/recycle variable cost=0
+
+Test 4:
+recycled flow不进入外部CO2交易量
+
+Test 5:
+recycled flow不增加carbon credit
+
+Test 6:
+recycled flow不增加EOR revenue
+
+Test 7:
+per fresh tonne injection electricity=20.4 kWh
+
+Test 8:
+per fresh tonne recycle electricity=38 kWh
+
+Test 9:
+combined CO2 handling electricity=58.4 kWh/t fresh
+
+Test 10:
+Fig.5 hidden points不能覆盖rho=1.0正式参数。
+
+==================================================
+15. 方法文稿表述
+==================================================
+
+正式写法：
+
+"To avoid imposing an unnecessarily detailed annual reservoir
+trajectory on the reduced-form stochastic game, recycled CO2
+is represented by a stationary lifecycle-average recycle ratio.
+One tonne of recycled CO2 is assumed per tonne of fresh CO2
+routed to EOR. This approximation is consistent with
+literature estimates in which recycled and net purchased CO2
+are of similar lifecycle magnitude, while recognizing that
+actual recycle rates vary over project life."
+
+==================================================
+16. 当前结论
+==================================================
+
+固定：
+
+fresh CO2:
+F = q_u
+
+recycled CO2:
+R = q_u
+
+total EOR injection workload:
+I = 2*q_u
+
+oil:
+Q_oil = q_u/4
+
+不再依赖Fig.5 CO2曲线。
+
+继续其他SOURCE_AUDIT项目。
+SOURCE_AUDIT_GATE全部通过前，
+仍不要启动正式12288行。

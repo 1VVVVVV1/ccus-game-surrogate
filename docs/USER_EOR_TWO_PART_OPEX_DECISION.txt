@@ -1,0 +1,1048 @@
+用户决定：EOR运营成本采用“两部制生命周期映射”，
+不采用“全部EOR OPEX统一吨均化”的原提案。
+
+本决定解决：
+
+EOR_OPERATING_COST_MAPPING
+
+停止点。
+
+==================================================
+1. 核心原则
+==================================================
+
+不要把：
+
+fixed annual EOR O&M
+
+全部除以CO2流量并塞进：
+
+utilization_cost_per_ton。
+
+正式映射分成：
+
+A. EOR fixed OPEX
+→ utilization_storage.fixed_opex
+
+B. EOR variable OPEX
+→ utilization_storage.utilization_cost_per_ton × q_u
+
+原因：
+
+当前模型已经显式包含：
+
+fixed_opex * x_U
++
+utilization_cost_per_ton * q_u
++
+storage_cost_per_ton * q_s
+
+因此没有必要为了降维而丢失固定成本的经济性质。
+
+==================================================
+2. 正式模型中的成本发生规则
+==================================================
+
+如果：
+
+x_U = 0
+
+则：
+
+EOR fixed OPEX = 0
+
+如果：
+
+x_U = 1
+
+则：
+
+EOR fixed OPEX
+
+每年发生，
+
+即使当年：
+
+q_u = 0
+
+仍然发生。
+
+这代表：
+
+已经建设好的EOR/下游设施需要维护、人员、监测、
+基础运行和设施保有费用。
+
+Variable EOR OPEX：
+
+只有：
+
+q_u > 0
+
+时才随EOR路径的实际新CO2流量发生。
+
+==================================================
+3. 不改变当前单一U主体结构
+==================================================
+
+继续保持：
+
+x_U ∈ {0,1}
+
+不要增加：
+
+x_EOR
+x_storage
+
+不要新增主体。
+
+不要重构动态博弈。
+
+当前U仍为：
+
+Integrated downstream utilization-and-storage platform
+
+其中：
+
+fixed_opex
+
+最终可以由：
+
+EOR fixed component
++
+dedicated-storage fixed component
++
+shared downstream fixed component
+
+组成。
+
+但每个组成部分都必须独立审计。
+
+==================================================
+4. 文献参考项目的符号
+==================================================
+
+对 Li et al. (2022) 的15年规划期：
+
+t = 1,...,15
+
+定义：
+
+F_t
+=
+第t年进入EOR路径的 fresh / newly captured CO2
+
+R_t
+=
+第t年 recycled CO2
+
+I_t
+=
+total injected CO2
+
+要求：
+
+I_t = F_t + R_t
+
+如果原文定义存在其他组成，
+必须严格按原文修改，
+不能强制使用上述等式。
+
+定义：
+
+B_t
+=
+第t年与EOR相关的油产量，
+严格使用论文对应变量口径。
+
+定义：
+
+K_t
+=
+第t年明确属于EOR路径的固定运营成本。
+
+==================================================
+5. fresh CO2 才是本模型 q_u 的映射分母
+==================================================
+
+本模型：
+
+q_u
+
+表示：
+
+外部捕集后首次进入EOR商业路径的新CO2。
+
+因此：
+
+recycled CO2
+
+不是新的：
+
+q_u
+
+不能再次计入物理流量。
+
+但 recycled CO2 的：
+
+recycling
+compression
+injection
+
+运营成本可以进入EOR成本 numerator。
+
+==================================================
+6. 固定OPEX正式映射
+==================================================
+
+先计算文献参考项目：
+
+Q_fresh_ref
+=
+Σ_t F_t
+
+参考项目平均年度fresh EOR流量：
+
+Q_fresh_ref_annual
+=
+Q_fresh_ref / 15
+
+当前模型基准EOR支路能力：
+
+Q_EOR_model
+=
+Q_bar × xi
+
+=
+0.50 × 0.20
+
+=
+0.10 MtCO2/year
+
+固定费用采用明确的线性能力缩放假设：
+
+scale_EOR_fixed
+=
+Q_EOR_model
+/
+Q_fresh_ref_annual
+
+即：
+
+scale_EOR_fixed
+=
+0.10
+/
+(Q_fresh_ref / 15)
+
+==================================================
+7. fixed_opex的EOR分量
+==================================================
+
+文献15年固定运营费用：
+
+K_total_ref
+=
+Σ_t K_t
+
+平均年度固定费：
+
+K_annual_ref
+=
+K_total_ref / 15
+
+正式模型EOR固定年费：
+
+F_EOR_model
+=
+K_annual_ref
+×
+scale_EOR_fixed
+
+等价：
+
+F_EOR_model
+=
+(Σ_t K_t / 15)
+×
+[0.10 / (Σ_t F_t / 15)]
+
+简化为：
+
+F_EOR_model
+=
+Σ_t K_t
+×
+0.10
+/
+Σ_t F_t
+
+单位最终必须：
+
+million CNY/year
+
+==================================================
+8. 这个固定费缩放属于MODEL_ASSUMPTION
+==================================================
+
+即使：
+
+K_t
+和
+F_t
+
+来自文献，
+
+从文献项目规模缩放到：
+
+0.10 Mt/year EOR支路
+
+仍然是模型外推。
+
+因此正式登记：
+
+status = MODEL_ASSUMPTION
+
+paper_use =
+SOURCE_BACKED_EOR_FIXED_OPEX_WITH_LINEAR_THROUGHPUT_SCALING
+
+不得称为：
+
+empirically observed fixed OPEX
+for the model project.
+
+==================================================
+9. Variable EOR OPEX正式计算
+==================================================
+
+只把明确属于variable OPEX的项目放入：
+
+V_t
+
+例如，经原文确认后可以包括：
+
+- injection electricity proportional to total injected CO2
+- recycling electricity proportional to recycled CO2
+- oil-production variable O&M proportional to oil production
+- oil-production electricity proportional to oil production
+- fluid lifting / pumping variable cost
+- other explicitly flow/output-dependent EOR OPEX
+
+不得包含：
+
+CAPEX
+annualized CAPEX
+CRF capital recovery
+CO2 purchase price
+capture cost
+109 km transport cost
+transport market transfer price
+tax
+financing cost
+dedicated-storage q_s cost
+carbon-price payment
+internal Nash transfer price
+
+==================================================
+10. 文献已经核验的变量成本口径
+==================================================
+
+现有审计已经确认：
+
+injection electricity:
+10.2 kWh / t total injected CO2
+
+oil-production variable O&M:
+8.2 USD / bbl
+
+oil-production electricity:
+22 kWh / bbl
+
+recycling electricity:
+38 kWh / t recycled CO2
+
+这些不得直接相加，
+
+因为分母分别是：
+
+total injected CO2
+barrel oil
+recycled CO2。
+
+必须先逐年换算为货币费用：
+
+V_t
+
+然后再汇总。
+
+==================================================
+11. utilization_cost_per_ton正式公式
+==================================================
+
+文献生命周期variable EOR OPEX：
+
+V_total_ref
+=
+Σ_t V_t
+
+正式：
+
+c_EOR_variable
+=
+V_total_ref
+/
+Q_fresh_ref
+
+即：
+
+utilization_storage.utilization_cost_per_ton
+=
+Σ_t V_t
+/
+Σ_t F_t
+
+最终单位：
+
+CNY / t fresh CO2
+
+该系数只乘：
+
+q_u
+
+==================================================
+12. 为什么variable成本可以这样吨均化
+==================================================
+
+这里允许生命周期吨均化，
+
+因为被吨均化的只有：
+
+flow/output-dependent operating costs。
+
+不是固定年费。
+
+因此本模型中：
+
+q_u = 0
+
+时：
+
+variable EOR OPEX = 0
+
+但：
+
+如果 x_U = 1
+
+EOR fixed OPEX仍存在。
+
+这样保留了：
+
+investment sunkness
+idle operating burden
+no-trade state cost
+bargaining incentives
+
+的经济含义。
+
+==================================================
+13. 禁止原提案中的“全成本吨均化”
+==================================================
+
+禁止计算：
+
+[Σ fixed OPEX + Σ variable OPEX]
+/
+Σ fresh CO2
+
+然后全部写入：
+
+utilization_cost_per_ton。
+
+也禁止：
+
+fixed_opex = 0
+
+只为了简化。
+
+==================================================
+14. Miao 2025的固定费处理
+==================================================
+
+现有审计记录：
+
+Miao et al. (2025)
+
+给出：
+
+injection fixed fee
+=
+6.84 million USD/year
+
+EOR/storage fixed fee
+=
+1.77 million USD/year
+
+recycling fixed fee
+=
+2.34 million USD/year
+
+这些首先登记为：
+
+REFERENCE_PROJECT_MODEL_INPUT
+
+不能自动全部相加。
+
+必须先做：
+
+cost-component crosswalk
+
+确认：
+
+1. 是否与Li 2022中的固定费用重复；
+2. 是否属于同一资产边界；
+3. 是否包含CAPEX年金；
+4. 是否属于EOR q_u路径；
+5. 是否包含独立storage q_s费用。
+
+==================================================
+15. 文献优先级
+==================================================
+
+EOR operating-cost正式映射：
+
+Li et al. (2022)
+
+作为primary lifecycle cost model。
+
+Miao et al. (2025)
+
+主要作为：
+
+cross-validation / supplementary decomposition source。
+
+如果两个文献对同一个成本组件都有数值：
+
+禁止相加。
+
+优先：
+
+同一组件采用Li 2022的完整生命周期定义。
+
+只有在：
+
+Li 2022未给出该组件
+AND
+Miao 2025明确给出
+AND
+资产边界和价格口径一致
+
+时，
+
+才允许由Miao补充。
+
+==================================================
+16. 必须建立cost-component crosswalk
+==================================================
+
+新增：
+
+docs/EOR_OPEX_COMPONENT_CROSSWALK.md
+
+并生成：
+
+results/source_backed_formal/source_audit/
+eor_opex_component_crosswalk.csv
+
+字段至少：
+
+component
+source
+source_table
+source_unit
+physical_denominator
+fixed_or_variable
+cost_boundary
+included_in_formal_mapping
+overlaps_with
+reason
+conversion_formula
+final_destination
+
+final_destination只允许：
+
+U_FIXED_OPEX
+U_UTILIZATION_VARIABLE_OPEX
+REFERENCE_ONLY
+EXCLUDED_DOUBLE_COUNTING
+UNRESOLVED
+
+==================================================
+17. CAPEX重复计费硬约束
+==================================================
+
+当前正式：
+
+U CAPEX
+=
+759.2857142857143 million CNY
+
+已经单独建模。
+
+因此任何EOR成本项如果属于：
+
+LEVELIZED_CAPEX_PLUS_OPEX
+
+则不得直接进入：
+
+fixed_opex
+或
+utilization_cost_per_ton
+
+除非能够明确剥离资本部分。
+
+如果不能剥离：
+
+REFERENCE_ONLY
+
+不得进入正式模型。
+
+==================================================
+18. 固定费用不能与U CAPEX重复
+==================================================
+
+如果：
+
+6.84
+1.77
+2.34 million USD/year
+
+中的任一项实际上是：
+
+capital recovery
+annualized equipment CAPEX
+depreciation-based capital charge
+
+则：
+
+不得计入正式fixed_opex。
+
+只有确认：
+
+OPEX_ONLY
+
+的部分才能进入。
+
+==================================================
+19. 独立封存费用不得混入EOR
+==================================================
+
+本次决策只解决：
+
+q_u EOR route
+
+的OPEX。
+
+不要用：
+
+EOR-associated storage cost
+
+自动替代：
+
+storage_cost_per_ton * q_s
+
+q_s仍需独立审计。
+
+如果Miao的：
+
+1.77 million USD/year
+
+无法区分：
+
+EOR-associated storage
+与
+dedicated storage
+
+则：
+
+REFERENCE_ONLY
+
+不要塞入q_s。
+
+==================================================
+20. 货币换算规则
+==================================================
+
+所有计算先在原文币种完成。
+
+然后统一转换为CNY。
+
+必须记录：
+
+source currency
+source price year
+FX source
+FX period
+conversion formula
+
+不得：
+
+今天汇率直接换历史成本
+而不说明。
+
+不得自行做通胀升级。
+
+如果最终需要价格年统一，
+且规范没有授权：
+
+STOP_FOR_USER_DECISION。
+
+==================================================
+21. 不做NPV折现后再吨均
+==================================================
+
+固定和variable OPEX映射：
+
+使用原始年度费用总和。
+
+不要先：
+
+discount to present value
+
+再除CO2。
+
+原因：
+
+这里构造的是：
+
+operating cost coefficient
+
+不是：
+
+levelized NPV metric。
+
+正式动态模型本身会用：
+
+gamma = 1 / 1.08
+
+逐年折现。
+
+==================================================
+22. 15年文献到30年模型的处理
+==================================================
+
+Li文献15年生命周期用于：
+
+估计一个长期平均的：
+
+fixed annual OPEX benchmark
+和
+variable unit OPEX benchmark。
+
+模型30年内：
+
+这些formal coefficients保持实值恒定。
+
+这是：
+
+MODEL_ASSUMPTION
+
+不得声称：
+
+Li文献预测了30年成本不变。
+
+论文表述：
+
+"The 15-year reference-project operating schedule is mapped
+into stationary annual fixed and per-ton variable EOR
+operating-cost coefficients for the 30-year stochastic game."
+
+==================================================
+23. 如果10.68 Mt可作为fresh EOR denominator
+==================================================
+
+只有当重新核验确认：
+
+10.68 Mt
+
+确实等于：
+
+Σ_t F_t
+
+即：
+
+生命周期进入EOR路径的newly captured/fresh CO2
+
+时，
+
+才允许使用：
+
+Q_fresh_ref
+=
+10.68 MtCO2
+
+于是：
+
+Q_fresh_ref_annual
+=
+10.68 / 15
+=
+0.712 MtCO2/year
+
+固定费容量缩放因子：
+
+scale_EOR_fixed
+=
+0.10 / 0.712
+=
+0.1404494382022472
+
+如果10.68不是该物理口径：
+
+不得使用上述0.1404494382022472。
+
+必须按表4逐年fresh EOR CO2重新求和。
+
+==================================================
+24. 关于Miao三项固定费的示例计算
+==================================================
+
+只有在确认三项：
+
+6.84
+1.77
+2.34
+
+全部：
+
+OPEX_ONLY
+非重复
+同一EOR资产边界
+且全部应进入U fixed OPEX
+
+时，
+
+参考项目固定费才可为：
+
+10.95 million USD/year
+
+如果同时确认：
+
+Q_fresh_ref = 10.68 Mt / 15 years
+
+则缩放后：
+
+F_EOR_model
+=
+10.95
+×
+0.1404494382022472
+
+=
+1.5379213483146068 million USD/year
+
+注意：
+
+这只是条件计算。
+
+在cost-component crosswalk确认前，
+不得直接写入正式config。
+
+==================================================
+25. fixed_opex最终值不能提前冻结
+==================================================
+
+因为：
+
+U fixed_opex
+
+最终可能还包括：
+
+dedicated-storage fixed OPEX
+shared downstream fixed OPEX
+
+所以先输出：
+
+approved_eor_fixed_opex_component
+
+不要直接假设：
+
+total U fixed_opex
+=
+EOR fixed component。
+
+在storage OPEX审计完成后：
+
+total_U_fixed_opex
+=
+EOR_fixed
++
+dedicated_storage_fixed
++
+shared_fixed
+
+其中重复组件必须去除。
+
+==================================================
+26. 新增测试
+==================================================
+
+至少增加：
+
+Test 1:
+x_U=0
+→ fixed EOR OPEX = 0
+
+Test 2:
+x_U=1, q_u=0
+→ fixed EOR OPEX > 0
+
+Test 3:
+x_U=1, q_u>0
+→ fixed + variable both apply
+
+Test 4:
+doubling q_u
+→ variable EOR OPEX doubles
+→ fixed EOR OPEX unchanged
+
+Test 5:
+changing xi
+does not directly alter the approved fixed-cost scaling
+once baseline calibration is frozen.
+
+Test 6:
+recycled CO2 is not added to q_u.
+
+Test 7:
+recycling cost may enter numerator,
+but recycled tonnes do not enter fresh-CO2 denominator.
+
+Test 8:
+CAPEX component cannot enter OPEX.
+
+Test 9:
+transport cost cannot enter EOR OPEX.
+
+Test 10:
+storage q_s cost cannot enter EOR utilization cost.
+
+Test 11:
+no double counting between Li and Miao components.
+
+Test 12:
+zero-flow state still incurs fixed OPEX if x_U=1.
+
+==================================================
+27. 参数注册表
+==================================================
+
+最终至少需要两项：
+
+A.
+
+parameter_key:
+utilization_storage.eor_fixed_opex_component
+
+status:
+MODEL_ASSUMPTION
+
+unit:
+million CNY/year
+
+transformation:
+reference lifecycle fixed OPEX
+scaled by model/reference fresh-EOR throughput
+
+B.
+
+parameter_key:
+utilization_storage.utilization_cost_per_ton
+
+status:
+MODEL_ASSUMPTION
+
+unit:
+CNY/t fresh CO2
+
+transformation:
+reference lifecycle variable EOR OPEX
+divided by cumulative fresh EOR CO2
+
+每个底层literature input
+继续保留各自：
+
+EMPIRICAL
+或
+MODEL_ASSUMPTION
+
+真实来源身份。
+
+==================================================
+28. 论文解释
+==================================================
+
+正确表述：
+
+"EOR operating costs are mapped using a two-part
+approximation. Reference-project fixed operating expenses are
+linearly scaled to the model's EOR-throughput scale and
+retained as annual fixed OPEX after downstream investment,
+whereas flow-dependent injection, recycling and oil-production
+expenses are aggregated over the reference lifecycle and
+expressed per tonne of fresh CO2 routed to EOR."
+
+并补：
+
+"This mapping is a transparent model assumption rather than
+an empirical claim that fixed EOR costs are perfectly linear
+in throughput."
+
+==================================================
+29. 不增加敏感性分析
+==================================================
+
+不要自动增加：
+
+all-variable-vs-two-part
+固定费缩放指数
+15年vs30年
+
+等额外敏感性实验。
+
+本次只固定正式映射。
+
+==================================================
+30. 继续执行条件
+==================================================
+
+现在：
+
+EOR operating-cost mapping rule
+
+已经确定。
+
+不要再询问：
+
+“是否将所有固定费吨均化”。
+
+答案：
+
+NO。
+
+继续完成：
+
+1. Li 2022逐年量和费用核验；
+2. Li/Miao cost-component crosswalk；
+3. cost boundary排重；
+4. fresh CO2 denominator核验；
+5. 汇率/价格年审计；
+6. 得到EOR fixed component；
+7. 得到utilization_cost_per_ton；
+8. 独立storage OPEX审计；
+9. effective abatement审计；
+10. official carbon-price完整序列。
+
+只有新的核心参数仍无法唯一确定时，
+再STOP_FOR_USER_DECISION。
+
+GATE_SOURCE_AUDIT通过以前，
+仍不要启动正式12288行运行。
