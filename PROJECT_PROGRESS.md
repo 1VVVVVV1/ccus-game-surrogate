@@ -1060,3 +1060,229 @@ JV上端点仍FAIL：pool与application分别舍入再fsum为1708392.8310323982�
 ## 2026-09-22 正式入口完成，准备冻结
 
 新增run_source_backed_protocol.py，来源/官方序列重算验证、独立source配置、COMMIT_NOW9个目标、同步诊断、exact数据、33代理目标、61项1001点exact边界及哈希resume串联完成。172tests通过（2.52s），compileall通过。正式代理保持既定HGB和划分/阈值；commit-now使用价值类0.98/0.05门槛。新增边界与同步定义文档；阶段动作概率质量为30年累计量，不误称路径概率。原formal及全部来源原件保留本地，生成产物由哈希manifest审计，不上传。下一步本地Git冻结后启动正式入口。
+
+
+Exact checkpoint 0000: 128/4096 scenarios; chunk validated, hash 71cbebb3adbb1eb8a3e1cb0869e4d29a68a635feaac5645fc080e2895029a2f6.
+
+
+Exact checkpoint 0001: 256/4096 scenarios; chunk validated, hash 6b903a16d9b14553e24c6f5fdd8162aa90e646914e857a6767b8bd315ab42484.
+
+
+Exact checkpoint 0002: 384/4096 scenarios; chunk validated, hash db70a6a502a5159e1d881d4dc7a5dd7f321e519c70fe1fe376a906653996505d.
+
+
+Exact checkpoint 0003: 512/4096 scenarios; chunk validated, hash 8c62e76bc4010b0cc44aaf98727ae1f5125ee69df763bf3ff4aecbf3abad133c.
+
+
+Exact checkpoint 0004: 640/4096 scenarios; chunk validated, hash 0011035b9838610066b5b04e5d4fb7de66e4ce83509ba5aed8bf74a9eb99f512.
+
+
+Exact checkpoint 0005: 768/4096 scenarios; chunk validated, hash c9864468cdfc8707c7ac2334af3f550de3202dd489678b1730f380603263204c.
+
+
+Exact checkpoint 0006: 896/4096 scenarios; chunk validated, hash d13567452d3cb19510d94d8b9dfea99732b2235b2b84fce01c0d510f9246e196.
+
+
+Exact checkpoint 0007: 1024/4096 scenarios; chunk validated, hash 959487405c0e78a95fd1bd6bc8fe8a203e92582b02f26f61ae93d0e6d1bf845a.
+
+
+Exact checkpoint 0008: 1152/4096 scenarios; chunk validated, hash 2cd0ae2522ff738f5bc2fad23cde0c6e9947acf435dab021240d6860a5063e40.
+
+
+Exact checkpoint 0009: 1280/4096 scenarios; chunk validated, hash 7fcd9f64996f185adc0f4a03f0fd7df0334ee39ac221906135aeab868858a90f.
+
+
+Exact checkpoint 0010: 1408/4096 scenarios; chunk validated, hash 864925d8411b9c0fc4c3a1ea8d6e933384872e1f0281f36fe00811806451dfea.
+
+
+Exact checkpoint 0011: 1536/4096 scenarios; chunk validated, hash 56228a3008169596dca13aaf0e4733fa4129e3b5664cb549c8e31ae12bba5580.
+
+
+Exact checkpoint 0012: 1664/4096 scenarios; chunk validated, hash ee69223c88a80add1f246e6383296dfccf4a3f05e813bbdd27c39e21e64481cd.
+
+
+Exact checkpoint 0013: 1792/4096 scenarios; chunk validated, hash 7c808258a9b16ae24b4db9ba7c9e2ea448628b4749a0999a2a4c4e8ad1690737.
+
+
+Exact checkpoint 0014: 1920/4096 scenarios; chunk validated, hash 4f310d3eac663d8f72e4bd8115792920af816c46382271869820bc8e7d452340.
+
+
+Exact checkpoint 0015: 2048/4096 scenarios; chunk validated, hash 35d1f52a43278a0f83a0c8d00d2b779f47c0fcf9d3bde89779e9a9fcd976ce8a.
+
+
+Exact checkpoint 0016: 2176/4096 scenarios; chunk validated, hash 53ed8ff461175bc5f3e652234eedbdf5a0753db71671e3c631275e27c556bbfe.
+
+
+Exact checkpoint 0017: 2304/4096 scenarios; chunk validated, hash 7fd7804dc090ceb8adbb1856b2dc9820827a2bac3060d5999f5dd9145097127f.
+
+
+## 2026-09-22 正式基准与冻结Gate通过
+
+Git冻结bc0d0fe4d2fff35a32caae1e74f87e1ea74f0786；SOURCE_AUDIT、CARBON_CALIBRATION、CONFIG_FREEZE、BASELINE及SYNCHRONIZATION_DIAGNOSTIC Gate均PASS。正式启动前172tests及source30tests通过。基准单位million CNY：
+
+         mode  system_npv  commit_now_system_npv  invest_prob_C  invest_prob_U
+     TRANSFER 3885.186380            3871.460794       0.853660       0.853660
+JOINT_VENTURE 3894.578561            3324.675920       0.930814       0.934506
+  STATE_OWNED 3896.293879            3324.675920       0.918044       0.918044
+
+基准同步判定TRANSFER=true、JV=false、SOE=true；仅为基准，最终全样本判定在exact完成后计算。JV的C/U投资概率差非零，未为制造差异改模型。所有正式结果写source_backed_formal，旧formal未复用。
+
+
+Exact checkpoint 0018: 2432/4096 scenarios; chunk validated, hash 9021459435a76a89262b11d06c4d0b7321d20865407073ad9ea516ba46ee8898.
+
+
+Exact checkpoint 0019: 2560/4096 scenarios; chunk validated, hash 6e6b07df71540f5c3a8d9dc967fa2d96f259a4b78e6a6f504915d7b865d090e9.
+
+
+Exact checkpoint 0020: 2688/4096 scenarios; chunk validated, hash e881eb792194be550ec599a86d52b9a0e5351ce70fb479739c6bc371c3182046.
+
+
+Exact checkpoint 0021: 2816/4096 scenarios; chunk validated, hash 502dfb52476f4d05136c11bea18a2e8d20b15d89d66529b617b00b49f0590eb4.
+
+
+Exact checkpoint 0022: 2944/4096 scenarios; chunk validated, hash c421d0396ca92c7ae5b5752e581ccddb4789c9a43d23cfd2ae78bda5b7a78372.
+
+
+Exact checkpoint 0023: 3072/4096 scenarios; chunk validated, hash 5d8d6a72aef8511ff96b45990570bfbc1462355d1995cca63a1e13ec4701ac2c.
+
+
+Exact checkpoint 0024: 3200/4096 scenarios; chunk validated, hash 621c481ac4bf932b0aacf17797fad1c6505279eb6033401515fc1406aa52d943.
+
+
+Exact checkpoint 0025: 3328/4096 scenarios; chunk validated, hash 805737bfd10da17b6acc32a9c5798dd255b0d2c210ddc79536046f8545491868.
+
+
+Exact checkpoint 0026: 3456/4096 scenarios; chunk validated, hash c87f3a0a4c8ff72368e9cf6d8749e864098084a5cbda04c9e106c37e96c7bdb6.
+
+
+Exact checkpoint 0027: 3584/4096 scenarios; chunk validated, hash d0a200e49291fafc84e0e2ac15c513f4dfa354608a7f89cfb720ba9773c16062.
+
+
+Exact checkpoint 0028: 3712/4096 scenarios; chunk validated, hash 4be1af8424d0204fa9dd04d906903cc27b1fb1b17cd49d001991c34f4db7974d.
+
+
+Exact checkpoint 0029: 3840/4096 scenarios; chunk validated, hash a3fc6f51afdf996caa917e3dca6e70eb6bab16f6a384d463a054a20d9ca82d3a.
+
+
+Exact checkpoint 0030: 3968/4096 scenarios; chunk validated, hash 92d14eb5adc6f18aae17aac6266cb91ac1eef670d0d9594ec3246f8ebdb953a6.
+
+
+Exact checkpoint 0031: 4096/4096 scenarios; chunk validated, hash 8101471fb919c382ba3de3e9342cf0cca14698c1cc0d49dd8e5086091a1f2c23.
+
+
+## 2026-09-22 正式exact与代理Gate通过
+
+4096×3=12288行完成，solver_failures=0，EXACT_DATASET_GATE及EXACT_INTEGRITY_GATE PASS。全样本最大静态误差0.00023283064365386963CNY，最大动态误差7.275957614183427e-11，最大概率质量误差4.440892098500625e-16。33/33代理目标通过固定门槛：TRANSFER14、JV13、SOE6；未调参、裁剪或删target。
+
+全样本同步TRANSFER=true、JV=false、SOE=true。JV最大投资概率差0.010815727580516077、最大条件投资年差2.258908099821208；均按原公式报告。已进入61项1001点exact-first BoundaryV2，边界结果尚待完成。
+
+
+Exact checkpoint 0000: 128/4096 scenarios; chunk validated, hash 71cbebb3adbb1eb8a3e1cb0869e4d29a68a635feaac5645fc080e2895029a2f6.
+
+
+Exact checkpoint 0001: 256/4096 scenarios; chunk validated, hash 6b903a16d9b14553e24c6f5fdd8162aa90e646914e857a6767b8bd315ab42484.
+
+
+Exact checkpoint 0002: 384/4096 scenarios; chunk validated, hash db70a6a502a5159e1d881d4dc7a5dd7f321e519c70fe1fe376a906653996505d.
+
+
+Exact checkpoint 0003: 512/4096 scenarios; chunk validated, hash 8c62e76bc4010b0cc44aaf98727ae1f5125ee69df763bf3ff4aecbf3abad133c.
+
+
+Exact checkpoint 0004: 640/4096 scenarios; chunk validated, hash 0011035b9838610066b5b04e5d4fb7de66e4ce83509ba5aed8bf74a9eb99f512.
+
+
+Exact checkpoint 0005: 768/4096 scenarios; chunk validated, hash c9864468cdfc8707c7ac2334af3f550de3202dd489678b1730f380603263204c.
+
+
+Exact checkpoint 0006: 896/4096 scenarios; chunk validated, hash d13567452d3cb19510d94d8b9dfea99732b2235b2b84fce01c0d510f9246e196.
+
+
+Exact checkpoint 0007: 1024/4096 scenarios; chunk validated, hash 959487405c0e78a95fd1bd6bc8fe8a203e92582b02f26f61ae93d0e6d1bf845a.
+
+
+Exact checkpoint 0008: 1152/4096 scenarios; chunk validated, hash 2cd0ae2522ff738f5bc2fad23cde0c6e9947acf435dab021240d6860a5063e40.
+
+
+Exact checkpoint 0009: 1280/4096 scenarios; chunk validated, hash 7fcd9f64996f185adc0f4a03f0fd7df0334ee39ac221906135aeab868858a90f.
+
+
+Exact checkpoint 0010: 1408/4096 scenarios; chunk validated, hash 864925d8411b9c0fc4c3a1ea8d6e933384872e1f0281f36fe00811806451dfea.
+
+
+Exact checkpoint 0011: 1536/4096 scenarios; chunk validated, hash 56228a3008169596dca13aaf0e4733fa4129e3b5664cb549c8e31ae12bba5580.
+
+
+Exact checkpoint 0012: 1664/4096 scenarios; chunk validated, hash ee69223c88a80add1f246e6383296dfccf4a3f05e813bbdd27c39e21e64481cd.
+
+
+Exact checkpoint 0013: 1792/4096 scenarios; chunk validated, hash 7c808258a9b16ae24b4db9ba7c9e2ea448628b4749a0999a2a4c4e8ad1690737.
+
+
+Exact checkpoint 0014: 1920/4096 scenarios; chunk validated, hash 4f310d3eac663d8f72e4bd8115792920af816c46382271869820bc8e7d452340.
+
+
+Exact checkpoint 0015: 2048/4096 scenarios; chunk validated, hash 35d1f52a43278a0f83a0c8d00d2b779f47c0fcf9d3bde89779e9a9fcd976ce8a.
+
+
+Exact checkpoint 0016: 2176/4096 scenarios; chunk validated, hash 53ed8ff461175bc5f3e652234eedbdf5a0753db71671e3c631275e27c556bbfe.
+
+
+Exact checkpoint 0017: 2304/4096 scenarios; chunk validated, hash 7fd7804dc090ceb8adbb1856b2dc9820827a2bac3060d5999f5dd9145097127f.
+
+
+Exact checkpoint 0018: 2432/4096 scenarios; chunk validated, hash 9021459435a76a89262b11d06c4d0b7321d20865407073ad9ea516ba46ee8898.
+
+
+Exact checkpoint 0019: 2560/4096 scenarios; chunk validated, hash 6e6b07df71540f5c3a8d9dc967fa2d96f259a4b78e6a6f504915d7b865d090e9.
+
+
+Exact checkpoint 0020: 2688/4096 scenarios; chunk validated, hash e881eb792194be550ec599a86d52b9a0e5351ce70fb479739c6bc371c3182046.
+
+
+Exact checkpoint 0021: 2816/4096 scenarios; chunk validated, hash 502dfb52476f4d05136c11bea18a2e8d20b15d89d66529b617b00b49f0590eb4.
+
+
+Exact checkpoint 0022: 2944/4096 scenarios; chunk validated, hash c421d0396ca92c7ae5b5752e581ccddb4789c9a43d23cfd2ae78bda5b7a78372.
+
+
+Exact checkpoint 0023: 3072/4096 scenarios; chunk validated, hash 5d8d6a72aef8511ff96b45990570bfbc1462355d1995cca63a1e13ec4701ac2c.
+
+
+Exact checkpoint 0024: 3200/4096 scenarios; chunk validated, hash 621c481ac4bf932b0aacf17797fad1c6505279eb6033401515fc1406aa52d943.
+
+
+Exact checkpoint 0025: 3328/4096 scenarios; chunk validated, hash 805737bfd10da17b6acc32a9c5798dd255b0d2c210ddc79536046f8545491868.
+
+
+Exact checkpoint 0026: 3456/4096 scenarios; chunk validated, hash c87f3a0a4c8ff72368e9cf6d8749e864098084a5cbda04c9e106c37e96c7bdb6.
+
+
+Exact checkpoint 0027: 3584/4096 scenarios; chunk validated, hash d0a200e49291fafc84e0e2ac15c513f4dfa354608a7f89cfb720ba9773c16062.
+
+
+Exact checkpoint 0028: 3712/4096 scenarios; chunk validated, hash 4be1af8424d0204fa9dd04d906903cc27b1fb1b17cd49d001991c34f4db7974d.
+
+
+Exact checkpoint 0029: 3840/4096 scenarios; chunk validated, hash a3fc6f51afdf996caa917e3dca6e70eb6bab16f6a384d463a054a20d9ca82d3a.
+
+
+Exact checkpoint 0030: 3968/4096 scenarios; chunk validated, hash 92d14eb5adc6f18aae17aac6266cb91ac1eef670d0d9594ec3246f8ebdb953a6.
+
+
+Exact checkpoint 0031: 4096/4096 scenarios; chunk validated, hash 8101471fb919c382ba3de3e9342cf0cca14698c1cc0d49dd8e5086091a1f2c23.
+
+
+## 2026-09-22 SOURCE_BACKED_ALL_STAGES_COMPLETED
+
+正式4096情景、12288行、solver failures0；33/33代理通过；61项V2完成，found0、found=false61、jump0、exact-root/level0、multiple-root0。每项均基于规定1001点exact网格，found=false不等于全域不存在边界，不扩大domain。最终完整172tests与source30tests通过。
+
+完整run_source_backed_protocol.py --resume已通过：1862个正式目录产物哈希不变。最终旧formal257文件及原game配置哈希再次一致，旧RL未修改。completion.json=ALL_STAGES_COMPLETED。正式报告results/source_backed_formal/FINAL_EXECUTION_REPORT.md；复现manifest及resume_validation.json均已保存。Git冻结bc0d0fe4d2fff35a32caae1e74f87e1ea74f0786。所有工作仅本地，未上传。
+
+## 2026-09-22 论文结果解释层完成
+
+按正式身份 bc0d0fe4d2fff35a32caae1e74f87e1ea74f0786，仅读取 FINAL_EXECUTION_REPORT、baseline、exact_dataset、同步诊断和 Boundary V2 1001点网格，建立独立 paper_analysis/20260922 层。未修改正式模型、配置、均衡规则、代理设定或 results/source_backed_formal/ 文件。
+
+已生成 PAPER_RESULTS_INTERPRETATION.md、baseline/commit-now/option value 表、JV 同步与参数分位表、61项 Boundary V2 分单位 proximity 排名表，以及3张论文核心图。分析确认：TRANSFER/JV 动态值为所选均衡系统价值，option_value 在联合情景中可为负，不能统称为非负集中式最优期权；baseline JV 非同步为 U-only 第20年先建、C-only 第21/23/26年跟随。碳价尺度和 U CAPEX 是 JV 非同步质量的主要描述性关联变量，transport_market_price 在既定域内关联接近零。
+
+分析输入哈希、正式目录前后快照和 4096情景/12288行/61边界/18个1001点网格审计保存于 paper_analysis/20260922/audit。分析脚本在运行前验证 reproducibility manifest、正式配置与 Git 身份，运行后验证正式目录哈希未改变。Boundary proximity 按 NPV、概率和价格分开排名；61个 found=false 仅解释为规定网格和 domain 内未检测到 crossing。

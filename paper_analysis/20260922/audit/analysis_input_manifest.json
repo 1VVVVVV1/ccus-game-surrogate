@@ -1,0 +1,19 @@
+{
+  "git_commit": "bc0d0fe4d2fff35a32caae1e74f87e1ea74f0786",
+  "config_sha256": "8c7501f0ee4a27fa8f13c561a9b2205888b7c6660cbef88f83df256b3583ac5c",
+  "source_sha256": "a4af0372bad0729fd178cc2f1107ba683b6eb6406e6d7b790475058b4afe6e3d",
+  "registry_sha256": "43b07f4c82a0485f6e4502385c99919eef704643623211ccc756d0b353f8834f",
+  "official_carbon_csv_sha256": "a5e60f21e0c065a4c3ef361274c7dfbc8a8d1664ee133cad979286462494000e",
+  "input_sha256": {
+    "results\\source_backed_formal\\FINAL_EXECUTION_REPORT.md": "73071b78397bd47d5959b2679d4c5eafd806c5a5f949b287014766b4d0bb62bf",
+    "PROJECT_PROGRESS.md": "960b083642c98042478c0b4d7f9160c441221640cb6625334d0d69b214700bcb",
+    "results\\source_backed_formal\\baseline\\source_backed_baseline_summary.csv": "7329bae553273b2fed65d1258fdc23f7e861db12eeca99ce0ae94830da27e16d",
+    "results\\source_backed_formal\\exact_dataset\\exact_scenarios.csv": "715a395fa9944def62d77f9c1ebe348213a2741bdd3507f22331d11df426f6e8",
+    "results\\source_backed_formal\\exact_dataset\\exact_equilibrium_outputs.csv": "a35901432cac72b666ef2b16423162a60f4353d2fdf1d71a7d62ac6d94d56269",
+    "results\\source_backed_formal\\boundaries_v2\\boundary_results.csv": "98f5ace642a385edcd8c9d725f8b8200a6d92fa1be3220297c02a9badfc95c56",
+    "results\\source_backed_formal\\diagnostics\\baseline_synchronization.csv": "4c7e78050435bb635f7ee0e3bee921525e2409066624074e0e612e32c06603e0"
+  },
+  "exact_rows": 12288,
+  "scenario_rows": 4096,
+  "boundary_rows": 61
+}
